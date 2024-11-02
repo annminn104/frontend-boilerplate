@@ -1,0 +1,11 @@
+# pnpm format || {
+#   echo "format failed" >> pre-commit-error.log
+#   exit 1
+# }
+
+pnpm lint-staged --verbose --concurrent false  || {
+  echo "lint-staged failed" >> pre-commit-error.log
+  exit 1
+}
+
+echo "Pre-commit hook finished successfully!"

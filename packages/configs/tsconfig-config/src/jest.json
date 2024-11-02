@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Jest with tsconfig",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "target": "es2020",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "declaration": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  }
+}

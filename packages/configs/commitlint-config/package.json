@@ -1,0 +1,55 @@
+{
+  "name": "@fe-boilerplate/commitlint-config",
+  "version": "1.0.0",
+  "description": "commitlint configuration for projects.",
+  "keywords": [
+    "commitlint",
+    "commitlint-config",
+    "commitlint-config-conventional"
+  ],
+  "exports": {
+    ".": {
+      "require": "./src/base.js"
+    }
+  },
+  "main": "src/base.js",
+  "files": [
+    "src/base.js"
+  ],
+  "scripts": {
+    "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
+    "format": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/commitlint-config.eslintcache",
+    "lint": "eslint --ext .ts,.js,.cjs,.mjs --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
+    "lint:dist": "es-check -v",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@commitlint/cli": "19.5.0",
+    "@commitlint/config-conventional": "19.5.0"
+  },
+  "devDependencies": {
+    "@fe-boilerplate/tsconfig-config": "workspace:*"
+  },
+  "peerDependencies": {
+    "@commitlint/cli": ">=19.5.0",
+    "@commitlint/config-conventional": ">=19.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/commitlint-config#readme",
+  "bugs": {
+    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
+    "directory": "packages/configs/commitlint-config"
+  },
+  "author": {
+    "name": "Anh Minh (Matthew Nguyen)",
+    "email": "annminn100@gmail.com",
+    "url": "https://github.com/annminn104"
+  },
+  "license": "ISC"
+}

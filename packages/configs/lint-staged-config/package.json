@@ -1,0 +1,92 @@
+{
+  "name": "@fe-boilerplate/lint-staged-config",
+  "version": "1.0.0",
+  "description": "lint-staged configuration for projects.",
+  "keywords": [
+    "lint-staged",
+    "lint-staged-config"
+  ],
+  "exports": {
+    ".": {
+      "require": "./src/common.js"
+    },
+    "./helpers": {
+      "require": "./src/common.js"
+    },
+    "./css": {
+      "require": "./src/configs/css.js"
+    },
+    "./graphql": {
+      "require": "./src/configs/graphql.js"
+    },
+    "./html": {
+      "require": "./src/configs/html.js"
+    },
+    "./jest": {
+      "require": "./src/configs/jest.js"
+    },
+    "./json": {
+      "require": "./src/configs/json.js"
+    },
+    "./md": {
+      "require": "./src/configs/md.js"
+    },
+    "./mdx": {
+      "require": "./src/configs/mdx.js"
+    },
+    "./package": {
+      "require": "./src/configs/package.js"
+    },
+    "./secrets": {
+      "require": "./src/configs/secrets.js"
+    },
+    "./style": {
+      "require": "./src/configs/style.js"
+    },
+    "./yaml": {
+      "require": "./src/configs/yaml.js"
+    }
+  },
+  "main": "src/common.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "src/*"
+  ],
+  "scripts": {
+    "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
+    "format": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/lint-staged-config.eslintcache",
+    "lint": "eslint --ext .ts,.js,.cjs,.mjs --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
+    "lint:dist": "es-check -v",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "29.5.14",
+    "@types/node": "22.8.6",
+    "@types/prettier": "3.0.0",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "shell-quote": "1.8.1"
+  },
+  "peerDependencies": {
+    "lint-staged": ">= 13"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/commitlint-config#readme",
+  "bugs": {
+    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
+    "directory": "packages/configs/lint-staged-config"
+  },
+  "author": {
+    "name": "Anh Minh (Matthew Nguyen)",
+    "email": "annminn100@gmail.com",
+    "url": "https://github.com/annminn104"
+  },
+  "license": "ISC"
+}

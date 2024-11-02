@@ -1,0 +1,3 @@
+pnpm build
+
+echo "Pre-push hook finished successfully!"

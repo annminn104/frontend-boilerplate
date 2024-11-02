@@ -1,0 +1,1 @@
+# HTMLhint Config

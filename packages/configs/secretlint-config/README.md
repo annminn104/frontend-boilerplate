@@ -1,0 +1,1 @@
+# Secretlint Config

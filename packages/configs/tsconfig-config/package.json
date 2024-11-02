@@ -1,0 +1,47 @@
+{
+  "name": "@fe-boilerplate/tsconfig-config",
+  "version": "1.0.0",
+  "description": "tsconfig configuration for projects.",
+  "keywords": [
+    "tsconfig",
+    "tsconfig-config"
+  ],
+  "main": "src/base.json",
+  "files": [
+    "src/base.json",
+    "src/jest.json",
+    "src/package.json",
+    "src/nextjs.json",
+    "src/react-library.json"
+  ],
+  "scripts": {
+    "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
+    "format": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/tsconfig-config.eslintcache",
+    "lint": "eslint --ext .ts,.js,.cjs,.mjs --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
+    "lint:dist": "es-check -v",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/commitlint-config#readme",
+  "bugs": {
+    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
+    "directory": "packages/configs/tsconfig-config"
+  },
+  "author": {
+    "name": "Anh Minh (Matthew Nguyen)",
+    "email": "annminn100@gmail.com",
+    "url": "https://github.com/annminn104"
+  },
+  "license": "ISC"
+}

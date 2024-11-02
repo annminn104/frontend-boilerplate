@@ -1,0 +1,194 @@
+{
+  "name": "@fe-boilerplate/eslint-config",
+  "version": "1.0.0",
+  "description": "eslint configuration for projects.",
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "eslint-config-bases",
+    "eslint-plugin",
+    "eslint-grapql",
+    "eslint-html",
+    "eslint-jest",
+    "eslint-mdx",
+    "eslint-typescript",
+    "eslint-prettier-plugin",
+    "eslint-prettier-config",
+    "eslint-react",
+    "eslint-react-query",
+    "eslint-regexp",
+    "eslint-react-testing-library",
+    "eslint-rtl",
+    "eslint-sonar",
+    "eslint-storybook",
+    "eslint-tailwind",
+    "eslint-tailwindcss"
+  ],
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "require": "./src/index.js"
+    },
+    "./patch/modern-module-resolution": {
+      "require": "./src/patch/modern-module-resolution.js"
+    },
+    "./configs": {
+      "require": "./src/configs/index.js"
+    },
+    "./graphql": {
+      "require": "./src/rules/graphql.js"
+    },
+    "./html": {
+      "require": "./src/rules/html.js"
+    },
+    "./jest": {
+      "require": "./src/rules/jest.js"
+    },
+    "./mdx": {
+      "require": "./src/rules/mdx.js"
+    },
+    "./playwright": {
+      "require": "./src/rules/playwright.js"
+    },
+    "./prettier": {
+      "require": "./src/rules/prettier.js"
+    },
+    "./react-query": {
+      "require": "./src/rules/react-query.js"
+    },
+    "./react-testing-library": {
+      "require": "./src/rules/react-testing-library.js"
+    },
+    "./react": {
+      "require": "./src/rules/react.js"
+    },
+    "./regexp": {
+      "require": "./src/rules/regexp.js"
+    },
+    "./security": {
+      "require": "./src/rules/security.js"
+    },
+    "./sonar": {
+      "require": "./src/rules/sonar.js"
+    },
+    "./storybook": {
+      "require": "./src/rules/storybook.js"
+    },
+    "./tailwind": {
+      "require": "./src/rules/tailwind.js"
+    },
+    "./typescript": {
+      "require": "./src/rules/typescript.js"
+    }
+  },
+  "main": "src/base.js",
+  "files": [
+    "src/*"
+  ],
+  "scripts": {
+    "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
+    "format": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
+    "lint": "eslint --ext .ts,.js,.cjs,.mjs --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
+    "lint:dist": "es-check -v",
+    "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/eslint-config-bases.eslintcache",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@html-eslint/eslint-plugin": "0.27.0",
+    "@html-eslint/parser": "0.27.0",
+    "@rushstack/eslint-patch": "1.10.4",
+    "@tanstack/eslint-plugin-query": "5.59.7",
+    "@testing-library/jest-dom": "6.6.3",
+    "@testing-library/react": "16.0.1",
+    "@typescript-eslint/eslint-plugin": "8.12.2",
+    "@typescript-eslint/parser": "8.12.2",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-import-resolver-typescript": "3.6.3",
+    "eslint-plugin-import": "2.31.0",
+    "eslint-plugin-jest": "28.8.3",
+    "eslint-plugin-jest-dom": "5.4.0",
+    "eslint-plugin-jest-formatting": "3.1.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-mdx": "3.1.5",
+    "eslint-plugin-prettier": "5.2.1",
+    "eslint-plugin-promise": "7.1.0",
+    "eslint-plugin-react": "7.37.2",
+    "eslint-plugin-react-hooks": "5.0.0",
+    "eslint-plugin-regexp": "2.6.0",
+    "eslint-plugin-security": "3.0.1",
+    "eslint-plugin-sonarjs": "2.0.4",
+    "eslint-plugin-storybook": "0.10.2",
+    "eslint-plugin-tailwindcss": "3.17.5",
+    "eslint-plugin-testing-library": "6.4.0",
+    "eslint-plugin-unicorn": "56.0.0",
+    "prettier": "3.3.3"
+  },
+  "devDependencies": {
+    "@graphql-eslint/eslint-plugin": "3.20.1",
+    "@testing-library/jest-dom": "6.6.3",
+    "@testing-library/react": "16.0.1",
+    "@types/jest": "29.5.14",
+    "@types/node": "22.8.6",
+    "@types/prettier": "3.0.0",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "eslint": "9.14.0",
+    "graphql": "16.9.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwindcss": "3.4.14",
+    "typescript": "5.6.3"
+  },
+  "peerDependencies": {
+    "@graphql-eslint/eslint-plugin": "3.20.1",
+    "@fe-boilerplate/lint-staged-config": "workspace:*",
+    "eslint": "9.14.0",
+    "graphql": "16.9.0",
+    "prettier": "3.3.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwindcss": "3.4.14",
+    "typescript": "5.6.3"
+  },
+  "peerDependenciesMeta": {
+    "@graphql-eslint/eslint-plugin": {
+      "optional": true
+    },
+    "graphql": {
+      "optional": true
+    },
+    "prettier": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "tailwindcss": {
+      "optional": true
+    },
+    "typescript": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/eslint-config#readme",
+  "bugs": {
+    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
+    "directory": "packages/configs/eslint-config"
+  },
+  "author": {
+    "name": "Anh Minh (Matthew Nguyen)",
+    "email": "annminn100@gmail.com",
+    "url": "https://github.com/annminn104"
+  },
+  "license": "ISC"
+}

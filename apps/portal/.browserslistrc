@@ -1,0 +1,5 @@
+{
+  "browserslist": [
+     "extends @fe-boilerplate/browserslist-config"
+  ]
+}

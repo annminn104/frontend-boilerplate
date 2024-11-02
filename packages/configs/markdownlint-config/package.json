@@ -1,0 +1,46 @@
+{
+  "name": "@fe-boilerplate/markdownlint-config",
+  "version": "1.0.0",
+  "description": "markdownlint configuration for projects.",
+  "keywords": [
+    "markdownlint",
+    "markdownlint-config"
+  ],
+  "main": "src/base.json",
+  "files": [
+    "src/base.json"
+  ],
+  "scripts": {
+    "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
+    "format": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/markdownlint-config.eslintcache",
+    "lint": "eslint --ext .ts,.js,.cjs,.mjs --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
+    "lint:dist": "es-check -v",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "markdownlint-cli": "0.42.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "markdownlint": ">= 0",
+    "markdownlint-cli": "0.42.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/commitlint-config#readme",
+  "bugs": {
+    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
+    "directory": "packages/configs/markdownlint-config"
+  },
+  "author": {
+    "name": "Anh Minh (Matthew Nguyen)",
+    "email": "annminn100@gmail.com",
+    "url": "https://github.com/annminn104"
+  },
+  "license": "ISC"
+}
