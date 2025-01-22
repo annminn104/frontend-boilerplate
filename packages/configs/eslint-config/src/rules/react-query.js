@@ -1,21 +1,16 @@
 const reactPatterns = {
-  files: ["*.{jsx,tsx}"],
-};
-
-/**
- * Fine-tune naming convention react typescript jsx (function components)
- * @link https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/naming-convention.md
- */
+  files: ['*.{jsx,tsx}'],
+}
 
 module.exports = {
   overrides: [
     {
-      files: [...reactPatterns.files],
       extends: [
         // @see https://tanstack.com/query/v4/docs/react/eslint/eslint-plugin-query
-        "plugin:@tanstack/eslint-plugin-query/recommended",
+        'plugin:@tanstack/eslint-plugin-query/recommended',
       ],
+      files: [...reactPatterns.files],
       // rules: { },
     },
   ],
-};
+}

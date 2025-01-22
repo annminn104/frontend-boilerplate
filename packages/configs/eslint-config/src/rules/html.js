@@ -1,14 +1,14 @@
 const htmlPatterns = {
-  files: ["**/*.html"],
-};
+  files: ['**/*.html'],
+}
 
 module.exports = {
-  plugins: ["@html-eslint"],
+  plugins: ['@html-eslint'],
   overrides: [
     {
       files: htmlPatterns.files,
-      parser: "@html-eslint/parser",
-      extends: ["plugin:@html-eslint/recommended"],
+      parser: '@html-eslint/parser',
+      extends: ['plugin:@html-eslint/recommended'],
     },
   ],
-};
+}

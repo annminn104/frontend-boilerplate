@@ -1,32 +1,20 @@
 const mdxPatterns = {
-  files: ["**/*.mdx"],
-};
+  files: ['*.mdx'],
+}
 
 module.exports = {
-  // optional, if you want to lint code blocks at the same time
-  settings: {
-    "mdx/code-blocks": true,
-    // optional, if you want to disable language mapper, set it to `false`
-    // if you want to override the default language mapper inside, you can provide your own
-    "mdx/language-mapper": {},
-  },
   overrides: [
     {
+      extends: ['plugin:mdx/recommended', 'plugin:@typescript-eslint/disable-type-checked'],
+      // For performance enable this only on mdx files
       files: mdxPatterns.files,
-      extends: ["plugin:mdx/recommended"],
-      parser: "eslint-mdx",
+      parser: 'eslint-mdx',
       parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
+        project: null,
       },
       rules: {
-        "import/namespace": "off",
-        "import/order": "off",
-        "@typescript-eslint/naming-convention": "off",
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/consistent-type-exports": "off",
-        "@typescript-eslint/no-unused-vars": "off",
+        '@typescript-eslint/consistent-type-exports': 'off',
       },
     },
   ],
-};
+}

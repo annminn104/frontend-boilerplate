@@ -1,1 +1,1 @@
-# Eslint Config
+# @fe-boilerplate/eslint-config

@@ -1,6 +1,6 @@
 const rtlPatterns = {
-  files: ["**/?(*.)+(test).{js,jsx,ts,tsx}"],
-};
+  files: ['**/?(*.)+(test).{js,jsx,ts,tsx}'],
+}
 
 module.exports = {
   env: {
@@ -10,16 +10,16 @@ module.exports = {
   },
   overrides: [
     {
+      extends: ['plugin:testing-library/react'],
       // For performance enable react-testing-library only on test files
       files: rtlPatterns.files,
-      extends: ["plugin:testing-library/react"],
     },
     {
-      files: ["**/test-utils.tsx"],
+      files: ['**/test-utils.tsx'],
       rules: {
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "import/export": "off",
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        'import/export': 'off',
       },
     },
   ],
-};
+}

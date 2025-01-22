@@ -4,3 +4,5 @@
 **/tmp/**
 pnpm-lock.yaml
 .changeset/*.md
+**/.cache/**
+**/.turbo/**
