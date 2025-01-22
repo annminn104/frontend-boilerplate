@@ -1,4 +1,4 @@
-const { filePatterns } = require('../configs/file-patterns');
+const { filePatterns } = require('../configs/file-patterns')
 
 module.exports = {
   extends: ['plugin:import-x/typescript', 'plugin:import-x/recommended'],
