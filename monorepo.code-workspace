@@ -58,11 +58,7 @@
     },
   ],
   "extensions": {
-    "recommendations": [
-      "folke.vscode-monorepo-workspace",
-      "dbaeumer.vscode-eslint",
-      "esbenp.prettier-vscode",
-    ],
+    "recommendations": ["folke.vscode-monorepo-workspace", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode"],
   },
   "settings": {
     "typescript.tsdk": "node_modules/typescript/lib",

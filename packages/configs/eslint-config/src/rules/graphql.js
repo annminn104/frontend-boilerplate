@@ -1,6 +1,6 @@
 const graphqlSchemaPatterns = {
   files: ['*.graphql'],
-};
+}
 
 module.exports = {
   overrides: [
@@ -13,4 +13,4 @@ module.exports = {
       },
     },
   ],
-};
+}

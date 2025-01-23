@@ -6,12 +6,8 @@ const filePatterns = {
   typescriptAndJsCodeWithoutJsx: ['*.{js,mjs,ts}'],
   typescriptAndJsCodeWithJsx: ['*.{js,mjs,ts,jsx,tsx}'],
   storybook: ['**/*.stories.{ts,tsx,mdx}'],
-  nonCodeFile: [
-    '**/?(*.)+(test).{js,jsx,ts,tsx}',
-    '**/?(*.)+(bench).{js,jsx,ts,tsx}',
-    '*.stories.{js,ts,jsx,tsx}',
-  ],
-};
+  nonCodeFile: ['**/?(*.)+(test).{js,jsx,ts,tsx}', '**/?(*.)+(bench).{js,jsx,ts,tsx}', '*.stories.{js,ts,jsx,tsx}'],
+}
 module.exports = {
   filePatterns,
-};
+}

@@ -8,4 +8,4 @@
 // @link https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new
 
 // @ts-ignore
-require('@rushstack/eslint-patch/modern-module-resolution');
+require('@rushstack/eslint-patch/modern-module-resolution')

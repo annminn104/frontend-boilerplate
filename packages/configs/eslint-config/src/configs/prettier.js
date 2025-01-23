@@ -1,13 +1,15 @@
 const getPrettierConfig = () => {
   return {
-    bracketSameLine: false,
-    bracketSpacing: true,
-    endOfLine: 'crlf',
-    semi: true,
-    singleQuote: true,
     tabWidth: 2,
+    arrowParens: 'avoid',
+    singleQuote: true,
+    semi: false,
     trailingComma: 'es5',
     useTabs: false,
+    bracketSpacing: true,
+    bracketSameLine: false,
+    printWidth: 150,
+    endOfLine: 'crlf',
     overrides: [
       {
         files: ['*.html'],
@@ -20,9 +22,9 @@ const getPrettierConfig = () => {
         },
       },
     ],
-  };
-};
+  }
+}
 
 module.exports = {
   getPrettierConfig,
-};
+}

@@ -33,4 +33,4 @@ module.exports = {
     'plugin/no-low-performance-animation-properties': true,
     'declaration-property-value-no-unknown': true,
   },
-};
+}

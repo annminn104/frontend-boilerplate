@@ -28,13 +28,7 @@ module.exports = {
       packages: ['@fe-boilerplate/*'],
     },
   ],
-  sortAz: [
-    'contributors',
-    'dependencies',
-    'devDependencies',
-    'peerDependencies',
-    'resolutions',
-  ],
+  sortAz: ['contributors', 'dependencies', 'devDependencies', 'peerDependencies', 'resolutions'],
   sortFirst: [
     'name',
     'version',
@@ -55,4 +49,4 @@ module.exports = {
   ],
   source: ['apps/**', 'packages/**', './package.json'],
   versionGroups: [],
-};
+}

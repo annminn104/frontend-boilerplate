@@ -7,6 +7,21 @@
     "commitlint-config",
     "commitlint-config-conventional"
   ],
+  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/commitlint-config#readme",
+  "bugs": {
+    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
+    "directory": "packages/configs/commitlint-config"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "Anh Minh (Matthew Nguyen)",
+    "email": "annminn100@gmail.com",
+    "url": "https://github.com/annminn104"
+  },
   "exports": {
     ".": {
       "require": "./src/base.js"
@@ -20,7 +35,7 @@
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
     "format": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/commitlint-config.eslintcache",
     "lint": "eslint --ext .ts,.js,.cjs,.mjs --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
-    "lint:dist": "es-check -v",
+    "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/browserslist-config.eslintcache",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -36,20 +51,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/commitlint-config#readme",
-  "bugs": {
-    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
-    "directory": "packages/configs/commitlint-config"
-  },
-  "author": {
-    "name": "Anh Minh (Matthew Nguyen)",
-    "email": "annminn100@gmail.com",
-    "url": "https://github.com/annminn104"
-  },
-  "license": "ISC"
+  }
 }

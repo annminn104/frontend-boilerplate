@@ -1,4 +1,4 @@
-const { getIgnorePatterns } = require('./src/configs/ignore-patterns');
+const { getIgnorePatterns } = require('./src/configs/ignore-patterns')
 
 module.exports = {
   extends: [
@@ -22,4 +22,4 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-require-imports': 'off',
   },
-};
+}

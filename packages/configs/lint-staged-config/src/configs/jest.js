@@ -3,4 +3,4 @@
  */
 module.exports = {
   '*.ts|*.tsx': ['jest --bail --findRelatedTests'],
-};
+}

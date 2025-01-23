@@ -1,4 +1,4 @@
-const { filePatterns } = require('../configs/file-patterns');
+const { filePatterns } = require('../configs/file-patterns')
 
 /**
  * Fine-tune naming convention react typescript jsx (function components)
@@ -18,12 +18,7 @@ module.exports = {
   ],
   overrides: [
     {
-      files: [
-        'tailwind.config.ts',
-        'tailwind.config.js',
-        '.eslintrc.cjs',
-        'lint-staged.config.js',
-      ],
+      files: ['tailwind.config.ts', 'tailwind.config.js', '.eslintrc.cjs', 'lint-staged.config.js'],
       rules: {
         '@typescript-eslint/no-require-imports': 'off',
         'unicorn/prefer-module': 'off',
@@ -139,14 +134,8 @@ module.exports = {
     ],
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/consistent-type-exports': 'error',
-    '@typescript-eslint/consistent-type-imports': [
-      'error',
-      { fixStyle: 'inline-type-imports', prefer: 'type-imports' },
-    ],
-    '@typescript-eslint/no-empty-function': [
-      'error',
-      { allow: ['private-constructors'] },
-    ],
+    '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports', prefer: 'type-imports' }],
+    '@typescript-eslint/no-empty-function': ['error', { allow: ['private-constructors'] }],
     '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: false }],
     '@typescript-eslint/no-import-type-side-effects': 'error',
     '@typescript-eslint/no-misused-promises': [
@@ -250,4 +239,4 @@ module.exports = {
       typescript: {},
     },
   },
-};
+}

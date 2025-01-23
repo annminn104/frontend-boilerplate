@@ -1,6 +1,6 @@
-const { getPrettierConfig } = require('@fe-boilerplate/eslint-config/configs');
+const { getPrettierConfig } = require('@fe-boilerplate/eslint-config/configs')
 
-const { overrides = [], ...prettierConfig } = getPrettierConfig();
+const { overrides = [], ...prettierConfig } = getPrettierConfig()
 
 /**
  * @type {import('prettier').Config}
@@ -11,7 +11,7 @@ module.exports = {
     ...overrides,
     ...[
       {
-        files: ['*.md', '*.mdx'],
+        files: '*.md',
         options: {
           singleQuote: false,
           quoteProps: 'preserve',
@@ -19,4 +19,4 @@ module.exports = {
       },
     ],
   ],
-};
+}

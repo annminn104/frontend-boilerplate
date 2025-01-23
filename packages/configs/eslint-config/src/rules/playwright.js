@@ -1,6 +1,6 @@
 const playwrightPatterns = {
   files: ['**/e2e/**/*.test.{js,ts}'],
-};
+}
 
 module.exports = {
   overrides: [
@@ -16,4 +16,4 @@ module.exports = {
       },
     },
   ],
-};
+}

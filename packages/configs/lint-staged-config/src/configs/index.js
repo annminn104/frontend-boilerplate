@@ -10,4 +10,4 @@ module.exports = {
   secrets: require('./secrets'),
   style: require('./style'),
   yaml: require('./yaml'),
-};
+}

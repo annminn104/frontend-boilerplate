@@ -6,6 +6,21 @@
     "htmlhint",
     "htmlhint-config"
   ],
+  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/commitlint-config#readme",
+  "bugs": {
+    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
+    "directory": "packages/configs/htmlhint-config"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "Anh Minh (Matthew Nguyen)",
+    "email": "annminn100@gmail.com",
+    "url": "https://github.com/annminn104"
+  },
   "main": "src/base.json",
   "files": [
     "src/base.json"
@@ -26,20 +41,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/commitlint-config#readme",
-  "bugs": {
-    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
-    "directory": "packages/configs/htmlhint-config"
-  },
-  "author": {
-    "name": "Anh Minh (Matthew Nguyen)",
-    "email": "annminn100@gmail.com",
-    "url": "https://github.com/annminn104"
-  },
-  "license": "ISC"
+  }
 }

@@ -1,6 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Recommended base tsconfig",
   "compilerOptions": {
     "module": "commonjs",
     "strict": true,
@@ -28,5 +27,6 @@
     "allowUnreachableCode": false,
     "noFallthroughCasesInSwitch": true
   },
+  "display": "Recommended base tsconfig",
   "exclude": ["node_modules"]
 }

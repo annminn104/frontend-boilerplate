@@ -1,7 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "React library with tsconfig",
-  "extends": "./base.json",
   "compilerOptions": {
     "baseUrl": "./src",
     "target": "esnext",
@@ -14,5 +12,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "composite": false
-  }
+  },
+  "display": "React library with tsconfig",
+  "extends": "./base.json"
 }

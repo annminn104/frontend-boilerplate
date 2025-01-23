@@ -1,9 +1,9 @@
 // https://nextjs.org/docs/advanced-features/customizing-postcss-config
-const postcssReporterFormatter = require('postcss-reporter/lib/formatter');
+const postcssReporterFormatter = require('postcss-reporter/lib/formatter')
 
-const isProd = process.env.NODE_ENV === 'production';
-const supportsIE11 = false;
-const enableCssGrid = false;
+const isProd = process.env.NODE_ENV === 'production'
+const supportsIE11 = false
+const enableCssGrid = false
 
 module.exports = {
   plugins: {
@@ -37,4 +37,4 @@ module.exports = {
       formatter: postcssReporterFormatter(),
     },
   },
-};
+}

@@ -1,4 +1,4 @@
-const { filePatterns } = require('../configs/file-patterns');
+const { filePatterns } = require('../configs/file-patterns')
 
 module.exports = {
   env: {
@@ -27,4 +27,4 @@ module.exports = {
       },
     },
   ],
-};
+}

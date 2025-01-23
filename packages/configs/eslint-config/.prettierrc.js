@@ -1,5 +1,5 @@
 // @ts-check
-const { getPrettierConfig } = require('./src/configs');
+const { getPrettierConfig } = require('./src/configs')
 
 /**
  * @type {import('prettier').Config}
@@ -9,4 +9,4 @@ module.exports = {
   overrides: [
     // whatever you need
   ],
-};
+}

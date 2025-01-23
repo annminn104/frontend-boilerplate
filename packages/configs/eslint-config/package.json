@@ -23,6 +23,21 @@
     "eslint-tailwind",
     "eslint-tailwindcss"
   ],
+  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/eslint-config#readme",
+  "bugs": {
+    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
+    "directory": "packages/configs/eslint-config"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "Anh Minh (Matthew Nguyen)",
+    "email": "annminn100@gmail.com",
+    "url": "https://github.com/annminn104"
+  },
   "type": "commonjs",
   "exports": {
     ".": {
@@ -105,6 +120,7 @@
     "lint": "eslint --ext .ts,.js,.cjs,.mjs --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
     "lint:dist": "es-check -v",
     "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
+    "lint:types": "tsc --project tsconfig.json --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -140,15 +156,15 @@
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
     "@types/jest": "29.5.14",
-    "@types/node": "22.10.7",
+    "@types/node": "20.10.7",
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
     "es-check": "7.2.1",
-    "eslint": "8.57.1",
+    "eslint": "8.57.0",
     "eslint-plugin-mdx": "3.1.5",
     "eslint-plugin-tailwindcss": "3.18.0",
     "graphql": "16.9.0",
-    "prettier": "3.4.2",
+    "prettier": "3.3.3",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "rimraf": "6.0.1",
@@ -158,7 +174,7 @@
   "peerDependencies": {
     "@graphql-eslint/eslint-plugin": "3.20.1",
     "@testing-library/dom": "10.4.0",
-    "eslint": "8.57.1",
+    "eslint": "8.57.0",
     "eslint-plugin-mdx": "3.1.5",
     "eslint-plugin-tailwindcss": "3.17.4",
     "graphql": "16.9.0",
@@ -201,20 +217,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/eslint-config#readme",
-  "bugs": {
-    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
-    "directory": "packages/configs/eslint-config"
-  },
-  "author": {
-    "name": "Anh Minh (Matthew Nguyen)",
-    "email": "annminn100@gmail.com",
-    "url": "https://github.com/annminn104"
-  },
-  "license": "ISC"
+  }
 }

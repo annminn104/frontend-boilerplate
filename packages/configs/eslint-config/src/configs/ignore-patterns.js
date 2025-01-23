@@ -7,9 +7,9 @@ const getIgnorePatterns = () => {
     '**/dist',
     '**/.storybook',
     '**/storybook-static',
-  ];
-};
+  ]
+}
 
 module.exports = {
   getIgnorePatterns,
-};
+}

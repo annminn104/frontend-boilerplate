@@ -6,6 +6,21 @@
     "jest",
     "jest-config"
   ],
+  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/commitlint-config#readme",
+  "bugs": {
+    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
+    "directory": "packages/configs/jest-config"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "Anh Minh (Matthew Nguyen)",
+    "email": "annminn100@gmail.com",
+    "url": "https://github.com/annminn104"
+  },
   "main": "src/base.js",
   "files": [
     "src/base.js"
@@ -29,20 +44,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/commitlint-config#readme",
-  "bugs": {
-    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
-    "directory": "packages/configs/jest-config"
-  },
-  "author": {
-    "name": "Anh Minh (Matthew Nguyen)",
-    "email": "annminn100@gmail.com",
-    "url": "https://github.com/annminn104"
-  },
-  "license": "ISC"
+  }
 }

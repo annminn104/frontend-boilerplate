@@ -1,6 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "@fe-boilerplate/eslint-config",
   "compilerOptions": {
     "strict": true,
     "skipLibCheck": true,
@@ -9,13 +8,7 @@
     "allowJs": true,
     "checkJs": true
   },
+  "display": "@fe-boilerplate/eslint-config",
   "exclude": ["node_modules", "dist", "build"],
-  "include": [
-    ".eslintrc.*",
-    "**/*.ts",
-    "**/*.js",
-    "**/*.cjs",
-    "**/*.mjs",
-    "**/*.json"
-  ]
+  "include": [".eslintrc.*", "**/*.ts", "**/*.js", "**/*.cjs", "**/*.mjs", "**/*.json"]
 }

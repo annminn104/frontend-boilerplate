@@ -1,4 +1,4 @@
-const automaticCommitPattern = /^chore\(release\):.*\[skip ci]/;
+const automaticCommitPattern = /^chore\(release\):.*\[skip ci]/
 
 module.exports = {
   extends: ['@commitlint/config-conventional'],
@@ -7,10 +7,7 @@ module.exports = {
     due to @semantic-release/git putting release notes in the commit body
     https://github.com/semantic-release/git/issues/331
   */
-  ignores: [
-    (/** @type {string} */ commitMessage) =>
-      automaticCommitPattern.test(commitMessage),
-  ],
+  ignores: [(/** @type {string} */ commitMessage) => automaticCommitPattern.test(commitMessage)],
   rules: {
     'body-leading-blank': [1, 'always'],
     'body-max-line-length': [2, 'always', 100],
@@ -18,11 +15,7 @@ module.exports = {
     'footer-max-line-length': [2, 'always', 100],
     'header-max-length': [2, 'always', 100],
     'scope-case': [2, 'always', 'lower-case'],
-    'subject-case': [
-      2,
-      'never',
-      ['sentence-case', 'start-case', 'pascal-case', 'upper-case'],
-    ],
+    'subject-case': [2, 'never', ['sentence-case', 'start-case', 'pascal-case', 'upper-case']],
     'subject-empty': [2, 'never'],
     'subject-full-stop': [2, 'never', '.'],
     'type-case': [2, 'always', 'lower-case'],
@@ -30,22 +23,7 @@ module.exports = {
     'type-enum': [
       2,
       'always',
-      [
-        'feat',
-        'fix',
-        'perf',
-        'docs',
-        'style',
-        'deps',
-        'refactor',
-        'ci',
-        'test',
-        'revert',
-        'build',
-        'chore',
-        'translation',
-        'security',
-      ],
+      ['feat', 'fix', 'perf', 'docs', 'style', 'deps', 'refactor', 'ci', 'test', 'revert', 'build', 'chore', 'translation', 'security'],
     ],
   },
-};
+}
