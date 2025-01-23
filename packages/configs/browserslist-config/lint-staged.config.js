@@ -1,7 +1,9 @@
 // @ts-check
 
 const { getEslintFixCmd } = require('@fe-boilerplate/lint-staged-config')
+const { ESLint } = require('eslint');
 
+const cli = new ESLint({});
 const json = require('@fe-boilerplate/lint-staged-config/json')
 const yaml = require('@fe-boilerplate/lint-staged-config/yaml')
 const secrets = require('@fe-boilerplate/lint-staged-config/secrets')
@@ -17,18 +19,14 @@ const rules = {
   ...md,
   ...yaml,
   ...html,
-  // '**/*.{js,jsx,ts,tsx}': filenames => {
-  //   return getEslintFixCmd({
-  //     cwd: __dirname,
-  //     fix: true,
-  //     cache: true,
-  //     // when autofixing staged-files a good tip is to disable react-hooks/exhaustive-deps, cause
-  //     // a change here can potentially break things without proper visibility.
-  //     rules: ['react-hooks/exhaustive-deps: off'],
-  //     maxWarnings: 25,
-  //     files: filenames,
-  //   });
-  // },
+ '**/*.{js,jsx,ts,tsx}': (filenames) => {
+    return [
+      `eslint --rule 'react-hooks/exhaustive-deps: off' --max-warnings=25 --fix ${filenames
+        .filter((file) => !cli.isPathIgnored(file))
+        .map((f) => `"${f}"`)
+        .join(' ')}`,
+    ];
+  },
 }
 
 module.exports = rules
