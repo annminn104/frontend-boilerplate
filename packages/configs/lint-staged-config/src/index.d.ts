@@ -1,4 +1,4 @@
-declare module "@fe-boilerplate/lint-staged-config" {
+declare module '@fe-boilerplate/lint-staged-config' {
   // Defines the structure for lint rules, where each key maps to a record of string to a function.
   export interface LintRule {
     [key: string]: Record<
@@ -12,7 +12,7 @@ declare module "@fe-boilerplate/lint-staged-config" {
     cwd: string;
     files: string[];
     fix: boolean;
-    fixType?: ("problem" | "suggestion" | "layout" | "directive")[];
+    fixType?: ('problem' | 'suggestion' | 'layout' | 'directive')[];
     cache: boolean;
     rules?: string[];
     maxWarnings?: number;

@@ -1,9 +1,9 @@
 // @ts-check
 
-const path = require("path");
-const escape = require("shell-quote").quote;
+const path = require('path');
+const escape = require('shell-quote').quote;
 
-const isWin = process.platform === "win32";
+const isWin = process.platform === 'win32';
 
 const eslintGlobalRulesForFix = [
   // react-hooks/eslint and react in general is very strict about exhaustively
@@ -25,7 +25,7 @@ const eslintGlobalRulesForFix = [
   //
   // @see https://reactjs.org/docs/hooks-rules.html
   // @see https://eslint.org/docs/2.13.1/user-guide/configuring#disabling-rules-with-inline-comments
-  "react-hooks/exhaustive-deps: off",
+  'react-hooks/exhaustive-deps: off',
 ];
 
 /**
@@ -47,21 +47,21 @@ const getEslintFixCmd = ({
 
   // For lint-staged it's safer to not apply the fix command if it changes the AST
   // @see https://eslint.org/docs/user-guide/command-line-interface#--fix-type
-  const cliFixType = [...(fixType ?? ["layout"])].filter(
-    (type) => type.trim().length > 0,
+  const cliFixType = [...(fixType ?? ['layout'])].filter(
+    (type) => type.trim().length > 0
   );
 
   const args = [
-    cache ? "--cache" : "",
-    fix ? "--fix" : "",
-    cliFixType.length > 0 ? `--fix-type ${cliFixType.join(",")}` : "",
-    maxWarnings !== undefined ? `--max-warnings=${maxWarnings}` : "",
-    cliRules.length > 0 ? `--rule ${cliRules.join(" --rule ")}` : "",
+    cache ? '--cache' : '',
+    fix ? '--fix' : '',
+    cliFixType.length > 0 ? `--fix-type ${cliFixType.join(',')}` : '',
+    maxWarnings !== undefined ? `--max-warnings=${maxWarnings}` : '',
+    cliRules.length > 0 ? `--rule ${cliRules.join(' --rule ')}` : '',
     files
       // makes output cleaner by removing absolute paths from filenames
       .map((f) => `"./${path.relative(cwd, f)}"`)
-      .join(" "),
-  ].join(" ");
+      .join(' '),
+  ].join(' ');
   return `eslint ${args}`;
 };
 
@@ -81,10 +81,10 @@ const concatFilesForPrettier = (filenames, ignoreFilenames = []) =>
   filenames
     .filter(
       (filename) =>
-        !ignoreFilenames.includes(filename.split("/").slice(-1)[0] || ""),
+        !ignoreFilenames.includes(filename.split('/').slice(-1)[0] || '')
     )
     .map((filename) => `"${isWin ? filename : escape([filename])}"`)
-    .join(" ");
+    .join(' ');
 
 const concatFilesForStylelint = concatFilesForPrettier;
 

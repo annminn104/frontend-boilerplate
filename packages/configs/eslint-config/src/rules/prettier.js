@@ -1,6 +1,6 @@
-const { getPrettierConfig } = require('../configs')
+const { getPrettierConfig } = require('../configs');
 
-const { ...prettierConfig } = getPrettierConfig()
+const { ...prettierConfig } = getPrettierConfig();
 
 module.exports = {
   extends: ['prettier'],
@@ -10,4 +10,4 @@ module.exports = {
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',
   },
-}
+};

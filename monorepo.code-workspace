@@ -2,59 +2,59 @@
   "folders": [
     {
       "name": "🌳 root",
-      "path": "."
+      "path": ".",
     },
     {
       "name": "🍂 portfolio",
-      "path": "apps/portfolio"
+      "path": "apps/portfolio",
     },
     {
       "name": "🍂 portal",
-      "path": "apps/portal"
+      "path": "apps/portal",
     },
     {
       "name": "📦 browserslint config",
-      "path": "apps/configs/browserslint-config"
+      "path": "apps/configs/browserslint-config",
     },
     {
       "name": "📦 commitlint config",
-      "path": "apps/configs/commitlint-config"
+      "path": "apps/configs/commitlint-config",
     },
     {
       "name": "📦 eslint config",
-      "path": "apps/configs/eslint-config"
+      "path": "apps/configs/eslint-config",
     },
     {
       "name": "📦 html config",
-      "path": "apps/configs/html-config"
+      "path": "apps/configs/html-config",
     },
     {
       "name": "📦 jest config",
-      "path": "apps/configs/jest-config"
+      "path": "apps/configs/jest-config",
     },
     {
       "name": "📦 lint-staged config",
-      "path": "apps/configs/lint-staged-config"
+      "path": "apps/configs/lint-staged-config",
     },
     {
       "name": "📦 markdownlint config",
-      "path": "apps/configs/markdownlint-config"
+      "path": "apps/configs/markdownlint-config",
     },
     {
       "name": "📦 postcss config",
-      "path": "apps/configs/postcss-config"
+      "path": "apps/configs/postcss-config",
     },
     {
       "name": "📦 secretlint config",
-      "path": "apps/configs/secretlint-config"
+      "path": "apps/configs/secretlint-config",
     },
     {
       "name": "📦 stylelint config",
-      "path": "apps/configs/stylelint-config"
+      "path": "apps/configs/stylelint-config",
     },
     {
       "name": "📦 tsconfig config",
-      "path": "apps/configs/tsconfig-config"
+      "path": "apps/configs/tsconfig-config",
     },
   ],
   "extensions": {
@@ -62,7 +62,7 @@
       "folke.vscode-monorepo-workspace",
       "dbaeumer.vscode-eslint",
       "esbenp.prettier-vscode",
-    ]
+    ],
   },
   "settings": {
     "typescript.tsdk": "node_modules/typescript/lib",
@@ -70,12 +70,12 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
+      "source.fixAll.eslint": true,
     },
     // Disable vscode formatting for js,jsx,ts,tsx files
     // to allow dbaeumer.vscode-eslint to format them
     "[javascript]": {
-      "editor.formatOnSave": false
+      "editor.formatOnSave": false,
     },
     "eslint.alwaysShowStatus": true,
     // https://github.com/Microsoft/vscode-eslint#mono-repository-setup
@@ -93,10 +93,9 @@
       "./packages/configs/secretlint-config",
       "./packages/configs/stylelint-config",
       "./packages/configs/tsconfig-config",
-
     ],
     "jest.disabledWorkspaceFolders": [
       // "🍂 portfolio",
-    ]
-  }
+    ],
+  },
 }

@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ["@fe-boilerplate/commitlint-config"],
+  extends: ['@fe-boilerplate/commitlint-config'],
 };

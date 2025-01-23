@@ -1,4 +1,4 @@
-const { filePatterns } = require('../configs/file-patterns')
+const { filePatterns } = require('../configs/file-patterns');
 
 module.exports = {
   // @see https://github.com/ota-meshi/eslint-plugin-regexp
@@ -13,4 +13,4 @@ module.exports = {
       },
     },
   ],
-}
+};

@@ -1,12 +1,15 @@
 // @ts-check
 
-const { concatFilesForPrettier, getEslintFixCmd } = require('@fe-boilerplate/lint-staged-config')
+const {
+  concatFilesForPrettier,
+  getEslintFixCmd,
+} = require('@fe-boilerplate/lint-staged-config');
 
 /**
  * @type {Record<string, (filenames: string[]) => string | string[] | Promise<string | string[]>>}
  */
 const rules = {
-  '**/*.{js,jsx,ts,tsx,mjs,cjs}': filenames => {
+  '**/*.{js,jsx,ts,tsx,mjs,cjs}': (filenames) => {
     return getEslintFixCmd({
       cwd: __dirname,
       fix: true,
@@ -16,11 +19,11 @@ const rules = {
       rules: ['react-hooks/exhaustive-deps: off'],
       maxWarnings: 25,
       files: filenames,
-    })
+    });
   },
-  '**/*.{json,md,mdx,css,html,yml,yaml,scss}': filenames => {
-    return [`prettier --write ${concatFilesForPrettier(filenames)}`]
+  '**/*.{json,md,mdx,css,html,yml,yaml,scss}': (filenames) => {
+    return [`prettier --write ${concatFilesForPrettier(filenames)}`];
   },
-}
+};
 
-module.exports = rules
+module.exports = rules;

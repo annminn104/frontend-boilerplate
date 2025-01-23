@@ -1,6 +1,6 @@
 const reactPatterns = {
   files: ['*.{jsx,tsx}'],
-}
+};
 
 module.exports = {
   overrides: [
@@ -13,4 +13,4 @@ module.exports = {
       // rules: { },
     },
   ],
-}
+};

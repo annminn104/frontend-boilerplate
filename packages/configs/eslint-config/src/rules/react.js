@@ -1,10 +1,10 @@
 const reactPatterns = {
   files: ['*.{jsx,tsx}'],
-}
+};
 
 const stylesPatterns = {
   files: ['*.styles.{js,ts}', 'styles.{js,ts}'],
-}
+};
 
 /**
  * Fine-tune naming convention react typescript jsx (function components)
@@ -42,4 +42,4 @@ module.exports = {
       },
     },
   ],
-}
+};

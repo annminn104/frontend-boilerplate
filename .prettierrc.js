@@ -1,8 +1,6 @@
-const { getPrettierConfig } = require("@fe-boilerplate/eslint-config/configs");
-
+const { getPrettierConfig } = require('@fe-boilerplate/eslint-config/configs');
 
 const { overrides = [], ...prettierConfig } = getPrettierConfig();
-
 
 /**
  * @type {import('prettier').Config}

@@ -1,6 +1,6 @@
 const htmlPatterns = {
   files: ['**/*.html'],
-}
+};
 
 module.exports = {
   plugins: ['@html-eslint'],
@@ -11,4 +11,4 @@ module.exports = {
       extends: ['plugin:@html-eslint/recommended'],
     },
   ],
-}
+};

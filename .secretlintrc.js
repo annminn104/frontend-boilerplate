@@ -1,3 +1,3 @@
 module.exports = {
-  ...require("@fe-boilerplate/secretlint-config"),
+  ...require('@fe-boilerplate/secretlint-config'),
 };
