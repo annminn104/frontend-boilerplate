@@ -8,7 +8,7 @@ const getPrettierConfig = () => {
     useTabs: false,
     bracketSpacing: true,
     bracketSameLine: false,
-    printWidth: 150,
+    printWidth: 120,
     endOfLine: 'crlf',
     overrides: [
       {

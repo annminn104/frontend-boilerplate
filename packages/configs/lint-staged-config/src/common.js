@@ -33,7 +33,9 @@ const eslintGlobalRulesForFix = [
  * @param {{cwd: string, files: string[], fix: boolean, fixType?: ('problem'|'suggestion'|'layout'|'directive')[], cache: boolean, rules?: string[], maxWarnings?: number}} params
  */
 const getEslintFixCmd = ({ cwd, files, rules, fix, fixType, cache, maxWarnings }) => {
-  const cliRules = [...(rules ?? []), ...eslintGlobalRulesForFix].filter(rule => rule.trim().length > 0).map(r => `"${r.trim()}"`)
+  const cliRules = [...(rules ?? []), ...eslintGlobalRulesForFix]
+    .filter(rule => rule.trim().length > 0)
+    .map(r => `"${r.trim()}"`)
 
   // For lint-staged it's safer to not apply the fix command if it changes the AST
   // @see https://eslint.org/docs/user-guide/command-line-interface#--fix-type

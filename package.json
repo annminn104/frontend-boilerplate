@@ -26,7 +26,7 @@
     "lint:turbo": "turbo lint --parallel",
     "lint:types": "turbo lint:types --parallel",
     "prepare": "is-ci || husky install",
-    "prettier:fix": "prettier --write \"**/*.{ts,tsx,md,js}\"",
+    "prettier:fix": "prettier --write .",
     "test": "jest",
     "test:e2e": "turbo run test:e2e --concurrency=1",
     "test:unit": "turbo run test --concurrency=1 "

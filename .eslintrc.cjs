@@ -7,5 +7,9 @@ module.exports = {
     project: 'tsconfig.base.json',
   },
   ignorePatterns: [...getIgnorePatterns()],
-  extends: ['@fe-boilerplate/eslint-config/typescript', '@fe-boilerplate/eslint-config/mdx', '@fe-boilerplate/eslint-config/prettier'],
+  extends: [
+    '@fe-boilerplate/eslint-config/typescript',
+    '@fe-boilerplate/eslint-config/mdx',
+    '@fe-boilerplate/eslint-config/prettier',
+  ],
 }
