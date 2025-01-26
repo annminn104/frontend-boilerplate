@@ -16,7 +16,7 @@ jobs:
     with:
       os: ubuntu-latest
       pull-request-number: ${{ github.event.pull_request.number }}
-      actor: lotyp
+      actor: annminn
       merge-method: merge
       allowed-ref: changeset-release/master
 
