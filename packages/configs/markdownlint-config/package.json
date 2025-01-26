@@ -1,6 +1,6 @@
 {
   "name": "@fe-boilerplate/markdownlint-config",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "markdownlint configuration for projects.",
   "keywords": [
     "markdownlint",
