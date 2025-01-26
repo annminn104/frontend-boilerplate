@@ -1,6 +1,6 @@
 {
   "name": "@fe-boilerplate/commitlint-config",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "commitlint configuration for projects.",
   "keywords": [
     "commitlint",
