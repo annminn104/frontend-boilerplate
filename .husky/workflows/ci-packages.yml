@@ -1,0 +1,78 @@
+---
+on: # yamllint disable-line rule:truthy
+  merge_group:
+  push:
+    branches:
+      - master
+      - develop
+    # Only consider those paths to trigger the action
+    paths:
+      - 'packages/**'
+      - 'packages/config/**'
+      - 'package.json'
+      - 'pnpm*'
+      - '.github/**'
+
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    # Only consider those paths to trigger the action
+    paths:
+      - 'packages/**'
+      - 'packages/config/**'
+      - 'package.json'
+      - 'pnpm*'
+      - '.github/**'
+
+name: 🔍 Continuous integration for packages
+
+jobs:
+  integration:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: ['ubuntu-latest']
+        node: ['20']
+
+    steps:
+      - name: 📦 Check out the codebase
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: ⚙️ Setup node ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: 📥 Monorepo install
+        uses: annminn104/gh-actions/actions/pnpm-install@master
+        with:
+          enable-corepack: true
+          cache-node-modules: true
+
+      - name: 📤 Restore packages cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/.cache
+            ${{ github.workspace }}/**/tsconfig.tsbuildinfo
+
+          key: ${{ runner.os }}-packages-cache-${{ hashFiles('**/pnpm*.yaml') }}-${{ hashFiles('packages/**/**.[jt]sx?', 'packages/**/**.json') }}
+          restore-keys: |
+            ${{ runner.os }}-packages-cache-${{ hashFiles('**/pnpm*.yaml') }}-
+
+      - if: github.event_name == 'pull_request'
+        name: 🔍 Validate all commits from PR
+        uses: wagoid/commitlint-github-action@v6
+        env:
+          NODE_PATH: ${{ github.workspace }}/node_modules
+
+      # Lint packages that have changed (--include & --since)
+      - name: 🚨 Lint
+        run: |
+          pnpm --filter "...[origin/master]" run lint

@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./packages/configs/tsconfig-config/src/base.json",
   "compilerOptions": {
     "moduleResolution": "node",
     "verbatimModuleSyntax": true,

@@ -1,6 +1,6 @@
 {
   "name": "@fe-boilerplate/eslint-config",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "eslint configuration for projects.",
   "keywords": [
     "eslint",
@@ -116,10 +116,9 @@
   ],
   "scripts": {
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
-    "format": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
-    "lint": "eslint --ext .ts,.js,.cjs,.mjs --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
+    "lint": "eslint --ext .ts,.js,.cjs,.mjs --cache --cache-location ../../.cache/eslint/eslint-config-bases.eslintcache",
     "lint:dist": "es-check -v",
-    "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
+    "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/eslint-config-bases.eslintcache",
     "lint:types": "tsc --project tsconfig.json --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -150,7 +149,6 @@
     "eslint-plugin-unused-imports": "4.1.4"
   },
   "devDependencies": {
-    "@fe-boilerplate/lint-staged-config": "workspace:*",
     "@graphql-eslint/eslint-plugin": "3.20.1",
     "@testing-library/dom": "10.4.0",
     "@testing-library/jest-dom": "6.6.3",

@@ -1,6 +1,6 @@
 {
   "name": "@fe-boilerplate/browserslist-config",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "browserslist configuration for projects.",
   "keywords": [
     "browserslist",
@@ -32,7 +32,7 @@
   ],
   "scripts": {
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
-    "lint": "eslint --ext .ts,.js,.cjs,.mjs --cache --cache-location ../../.cache/eslint/eslint-config.eslintcache",
+    "lint": "eslint --ext .ts,.js,.cjs,.mjs --cache --cache-location ../../.cache/eslint/browserslist-config.eslintcache",
     "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix --cache --cache-location ../../.cache/eslint/browserslist-config.eslintcache",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

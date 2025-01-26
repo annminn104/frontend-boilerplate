@@ -1,6 +1,6 @@
 // @ts-check
 
-const { getEslintFixCmd } = require('@fe-boilerplate/lint-staged-config/helpers')
+const { getEslintFixCmd } = require('@fe-boilerplate/lint-staged-config')
 
 const json = require('@fe-boilerplate/lint-staged-config/json')
 const yaml = require('@fe-boilerplate/lint-staged-config/yaml')
