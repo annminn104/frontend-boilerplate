@@ -11,6 +11,10 @@ on: # yamllint disable-line rule:truthy
 
 name: 🏷️ Add labels
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   label:
     uses: annminn104/gh-actions/.github/workflows/apply-labels.yml@master

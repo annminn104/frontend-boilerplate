@@ -6,4 +6,5 @@ pnpm-lock.yaml
 .changeset/*.md
 **/.cache/**
 **/.turbo/**
-.pnpm-store
+**/.pnpm-store/**
+pre-commit-error

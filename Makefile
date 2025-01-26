@@ -48,7 +48,7 @@ else
 	WHITE := ""
 	RST := ""
 endif
-MAKE_LOGFILE = /tmp/npm-shareable-configs.log
+MAKE_LOGFILE = /tmp/frontend-boilerplate.log
 MAKE_CMD_COLOR := $(BLUE)
 
 default: all

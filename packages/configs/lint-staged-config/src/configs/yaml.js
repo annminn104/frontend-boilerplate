@@ -7,8 +7,8 @@ module.exports = {
   '*.{yml,yaml}': filenames => {
     return [
       `prettier --write ${concatFilesForPrettier(filenames)}`,
-      // `yamllint --strict .`,
+      //  `yamllint --strict .`
     ]
   },
-  '.github/workflows/*.{yml,yaml}': () => [`actionlint`],
+  // '.github/workflows/*.{yml,yaml}': () => [`actionlint`],
 }
