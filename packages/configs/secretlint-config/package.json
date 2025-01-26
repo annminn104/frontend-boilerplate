@@ -1,6 +1,6 @@
 {
   "name": "@fe-boilerplate/secretlint-config",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "secretlint configuration for projects.",
   "keywords": [
     "secretlint",

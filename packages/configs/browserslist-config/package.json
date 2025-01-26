@@ -1,6 +1,6 @@
 {
   "name": "@fe-boilerplate/browserslist-config",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "browserslist configuration for projects.",
   "keywords": [
     "browserslist",

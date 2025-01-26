@@ -1,6 +1,6 @@
 {
   "name": "@fe-boilerplate/lint-staged-config",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "lint-staged configuration for projects.",
   "keywords": [
     "lint-staged",
