@@ -14,47 +14,47 @@
     },
     {
       "name": "📦 browserslint config",
-      "path": "apps/configs/browserslint-config",
+      "path": "packages/configs/browserslint-config",
     },
     {
       "name": "📦 commitlint config",
-      "path": "apps/configs/commitlint-config",
+      "path": "packages/configs/commitlint-config",
     },
     {
       "name": "📦 eslint config",
-      "path": "apps/configs/eslint-config",
+      "path": "packages/configs/eslint-config",
     },
     {
       "name": "📦 html config",
-      "path": "apps/configs/html-config",
+      "path": "packages/configs/html-config",
     },
     {
       "name": "📦 jest config",
-      "path": "apps/configs/jest-config",
+      "path": "packages/configs/jest-config",
     },
     {
       "name": "📦 lint-staged config",
-      "path": "apps/configs/lint-staged-config",
+      "path": "packages/configs/lint-staged-config",
     },
     {
       "name": "📦 markdownlint config",
-      "path": "apps/configs/markdownlint-config",
+      "path": "packages/configs/markdownlint-config",
     },
     {
       "name": "📦 postcss config",
-      "path": "apps/configs/postcss-config",
+      "path": "packages/configs/postcss-config",
     },
     {
       "name": "📦 secretlint config",
-      "path": "apps/configs/secretlint-config",
+      "path": "packages/configs/secretlint-config",
     },
     {
       "name": "📦 stylelint config",
-      "path": "apps/configs/stylelint-config",
+      "path": "packages/configs/stylelint-config",
     },
     {
       "name": "📦 tsconfig config",
-      "path": "apps/configs/tsconfig-config",
+      "path": "packages/configs/tsconfig-config",
     },
   ],
   "extensions": {
@@ -66,7 +66,7 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true,
+      "source.fixAll.eslint": "explicit"
     },
     // Disable vscode formatting for js,jsx,ts,tsx files
     // to allow dbaeumer.vscode-eslint to format them

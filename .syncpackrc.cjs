@@ -25,7 +25,7 @@ module.exports = {
       label: 'publishable-packages',
       dependencyTypes: ['peer', 'prod'],
       dependencies: ['**'],
-      packages: ['@fe-boilerplate/*'],
+      packages: ['@fe-boilerplate/*', '@fe-boilerplate/configs/*'],
     },
   ],
   sortAz: ['contributors', 'dependencies', 'devDependencies', 'peerDependencies', 'resolutions'],
@@ -47,6 +47,6 @@ module.exports = {
     'repository',
     'scripts',
   ],
-  source: ['apps/**', 'packages/**', './package.json'],
+  source: ['apps/**', 'packages/**', 'packages/configs/**', './package.json'],
   versionGroups: [],
 }
