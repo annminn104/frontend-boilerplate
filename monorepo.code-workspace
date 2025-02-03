@@ -13,8 +13,8 @@
       "path": "apps/portal",
     },
     {
-      "name": "📦 browserslint config",
-      "path": "packages/configs/browserslint-config",
+      "name": "📦 browserslist config",
+      "path": "packages/configs/browserslist-config",
     },
     {
       "name": "📦 commitlint config",
@@ -25,8 +25,8 @@
       "path": "packages/configs/eslint-config",
     },
     {
-      "name": "📦 html config",
-      "path": "packages/configs/html-config",
+      "name": "📦 htmlhint config",
+      "path": "packages/configs/htmlhint-config",
     },
     {
       "name": "📦 jest config",

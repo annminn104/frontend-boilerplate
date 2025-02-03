@@ -6,7 +6,7 @@
     "stylelint",
     "stylelint-config"
   ],
-  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/commitlint-config#readme",
+  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/configs/stylelint-config#readme",
   "bugs": {
     "url": "https://github.com/annminn104/frontend-boilerplate/issues"
   },
