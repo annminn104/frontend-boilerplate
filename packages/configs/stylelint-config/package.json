@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@double-great/stylelint-a11y": "3.0.2",
-    "stylelint": "16.10.0",
+    "stylelint": "16.14.1",
     "stylelint-a11y": "1.2.3",
     "stylelint-config-recommended": "14.0.1",
     "stylelint-config-standard": "36.0.1",
