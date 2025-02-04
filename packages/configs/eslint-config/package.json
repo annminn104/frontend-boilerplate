@@ -149,7 +149,7 @@
     "eslint-plugin-unused-imports": "4.1.4"
   },
   "devDependencies": {
-    "@graphql-eslint/eslint-plugin": "3.20.1",
+    "@graphql-eslint/eslint-plugin": "4.3.0",
     "@testing-library/dom": "10.4.0",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
@@ -170,7 +170,7 @@
     "typescript": "5.7.3"
   },
   "peerDependencies": {
-    "@graphql-eslint/eslint-plugin": "3.20.1",
+    "@graphql-eslint/eslint-plugin": "4.3.0",
     "@testing-library/dom": "10.4.0",
     "eslint": "8.57.0",
     "eslint-plugin-mdx": "3.1.5",
