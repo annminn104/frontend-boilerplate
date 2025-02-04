@@ -74,7 +74,7 @@
     "actionlint": "2.0.6",
     "markdownlint": "0.34.0",
     "secretlint": "8.2.3",
-    "sort-package-json": "2.10.0"
+    "sort-package-json": "2.14.0"
   },
   "packageManager": "pnpm@9.5.0",
   "engines": {
