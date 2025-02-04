@@ -135,8 +135,8 @@ importers:
   packages/configs/eslint-config:
     dependencies:
       '@rushstack/eslint-patch':
-        specifier: 1.10.4
-        version: 1.10.4
+        specifier: 1.10.5
+        version: 1.10.5
       '@tanstack/eslint-plugin-query':
         specifier: 5.60.1
         version: 5.60.1(eslint@8.57.1)(typescript@5.7.3)
@@ -1861,8 +1861,8 @@ packages:
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
 
-  '@rushstack/eslint-patch@1.10.4':
-    resolution: {integrity: sha512-WJgX9nzTqknM393q1QJDJmoW28kUfEnybeTfVNcNAPnIx210RXm2DiXiHzfNPJNIUUb1tJnz/l4QGtJ30PgWmA==}
+  '@rushstack/eslint-patch@1.10.5':
+    resolution: {integrity: sha512-kkKUDVlII2DQiKy7UstOR1ErJP8kUKAQ4oa+SQtM0K+lPdmmjj0YnnxBgtTVYH7mUKtbsxeFC9y0AmK7Yb78/A==}
 
   '@secretlint/config-creator@8.5.0':
     resolution: {integrity: sha512-y+xezycryTu9t5CDYyfLHu+1TPgINXTa2Xy/N9hLKiLmF288Sfcwk1j8q98FioaEGCEbUHEgeqaRVJ0rDYdxMQ==}
@@ -10315,7 +10315,7 @@ snapshots:
 
   '@rtsao/scc@1.1.0': {}
 
-  '@rushstack/eslint-patch@1.10.4': {}
+  '@rushstack/eslint-patch@1.10.5': {}
 
   '@secretlint/config-creator@8.5.0':
     dependencies:
