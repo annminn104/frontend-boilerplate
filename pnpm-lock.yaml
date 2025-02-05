@@ -311,8 +311,8 @@ importers:
         specifier: 18.3.5
         version: 18.3.5(@types/react@18.3.18)
       es-check:
-        specifier: 7.1.1
-        version: 7.1.1
+        specifier: 7.2.1
+        version: 7.2.1
 
   packages/configs/markdownlint-config:
     dependencies:
@@ -2364,11 +2364,6 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  acorn@8.8.2:
-    resolution: {integrity: sha512-xjIYgE8HBrkpd/sJqOGNspf8uHG+NOHGOw6a/Urj8taM2EXfdNAH2oFcPeIFfsv3+kz/mJrS5VuMqbNLjCa2vw==}
-    engines: {node: '>=0.4.0'}
-    hasBin: true
-
   actionlint@2.0.6:
     resolution: {integrity: sha512-tNx8f48yJNSLXTIygGntu5dSZlIZblDt8sR7pIs7EEmmb2PkEF87d+3UKZV2GUgCuN9Awj7k4ZPrwdAxFWEqgw==}
 
@@ -2867,10 +2862,6 @@ packages:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
 
-  commander@10.0.0:
-    resolution: {integrity: sha512-zS5PnTI22FIRM6ylNW8G4Ap0IEOyk62fhLSD0+uHRT9McRCLGpkVNvao4bjimpK/GShynyQkFFxHhwMcETmduA==}
-    engines: {node: '>=14'}
-
   commander@11.1.0:
     resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
     engines: {node: '>=16'}
@@ -3343,11 +3334,6 @@ packages:
   es-abstract@1.23.9:
     resolution: {integrity: sha512-py07lI0wjxAC/DcfK1S6G7iANonniZwTISvdPzk9hzeH0IZIshbuuFxLIU96OyF89Yb9hiqWn8M/bY83KY5vzA==}
     engines: {node: '>= 0.4'}
-
-  es-check@7.1.1:
-    resolution: {integrity: sha512-rgwR2wdJp437Exq28Emwc4x5+Qn6ORDliN9daWo0wTCg5jOQxJsIZieqxVi4AfDEIN4OwMwYhld9b13mnRocUQ==}
-    engines: {node: '>= 4'}
-    hasBin: true
 
   es-check@7.2.1:
     resolution: {integrity: sha512-4sxU2OZ1aYYRRX2ajL3hDDBaY96Yr/OcH6MTRerIuOSyil6SQYQQ0b48uqVfYGRCiI0NgJbtY6Sbmf75oPaTeQ==}
@@ -10826,8 +10812,6 @@ snapshots:
 
   acorn@8.14.0: {}
 
-  acorn@8.8.2: {}
-
   actionlint@2.0.6: {}
 
   agent-base@6.0.2:
@@ -11399,8 +11383,6 @@ snapshots:
     dependencies:
       delayed-stream: 1.0.0
 
-  commander@10.0.0: {}
-
   commander@11.1.0: {}
 
   commander@12.0.0: {}
@@ -11959,14 +11941,6 @@ snapshots:
       typed-array-length: 1.0.7
       unbox-primitive: 1.1.0
       which-typed-array: 1.1.18
-
-  es-check@7.1.1:
-    dependencies:
-      acorn: 8.8.2
-      commander: 10.0.0
-      fast-glob: 3.3.2
-      supports-color: 8.1.1
-      winston: 3.13.0
 
   es-check@7.2.1:
     dependencies:
