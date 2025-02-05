@@ -143,7 +143,7 @@
     "eslint-plugin-regexp": "2.7.0",
     "eslint-plugin-simple-import-sort": "12.1.1",
     "eslint-plugin-sonarjs": "2.0.4",
-    "eslint-plugin-storybook": "0.11.0",
+    "eslint-plugin-storybook": "0.11.2",
     "eslint-plugin-testing-library": "7.0.0",
     "eslint-plugin-unicorn": "56.0.0",
     "eslint-plugin-unused-imports": "4.1.4"
