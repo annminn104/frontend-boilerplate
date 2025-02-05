@@ -26,7 +26,7 @@
     },
     {
       "name": "📦 utilities",
-      "path": "packages/common/utils",
+      "path": "packages/utils",
     },
     {
       "name": "📦 browserslist config",
