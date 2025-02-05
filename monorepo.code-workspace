@@ -92,8 +92,12 @@
     "eslint.alwaysShowStatus": true,
     // https://github.com/Microsoft/vscode-eslint#mono-repository-setup
     "eslint.workingDirectories": [
-      "./apps/portfolio",
+      "./apps/landing",
       "./apps/portal",
+      "./packages/common/hooks",
+      "./packages/common/services",
+      "./packages/ui",
+      "./packages/utils",
       "./packages/configs/browserslist-config",
       "./packages/configs/commitlint-config",
       "./packages/configs/eslint-config",
