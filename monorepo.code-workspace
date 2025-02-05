@@ -5,12 +5,28 @@
       "path": ".",
     },
     {
-      "name": "🍂 portfolio",
-      "path": "apps/portfolio",
+      "name": "🍂 landing page",
+      "path": "apps/landing",
     },
     {
-      "name": "🍂 portal",
+      "name": "🍂 portal app",
       "path": "apps/portal",
+    },
+    {
+      "name": "📦 hooks",
+      "path": "packages/common/hooks",
+    },
+    {
+      "name": "📦 services",
+      "path": "packages/common/services",
+    },
+    {
+      "name": "📦 UI",
+      "path": "packages/ui",
+    },
+    {
+      "name": "📦 utilities",
+      "path": "packages/common/utils",
     },
     {
       "name": "📦 browserslist config",
