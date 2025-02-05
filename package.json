@@ -60,7 +60,7 @@
     "lint-staged": "^15.2.10",
     "markdownlint": "0.34.0",
     "markdownlint-cli": "0.39.0",
-    "npm-run-all2": "6.1.2",
+    "npm-run-all2": "6.2.6",
     "prettier": "3.4.2",
     "rimraf": "^6.0.1",
     "secretlint": "8.5.0",
