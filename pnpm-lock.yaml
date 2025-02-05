@@ -88,8 +88,8 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1
       secretlint:
-        specifier: 8.2.3
-        version: 8.2.3
+        specifier: 8.5.0
+        version: 8.5.0
       shell-quote:
         specifier: 1.8.2
         version: 1.8.2
@@ -6584,8 +6584,8 @@ packages:
     resolution: {integrity: sha512-3A6sD0WYP7+QrjbfNA2FN3FsOaGGFoekCVgTyypy53gPxhbkCIjtO6YWgdrfM+n/8sI8JeXZOIxsHjMTNxQ4nQ==}
     engines: {node: ^14.0.0 || >=16.0.0}
 
-  secretlint@8.2.3:
-    resolution: {integrity: sha512-B+Qqb1GwidwDUOryXWtGO+p4FfgvzyaVApPnq7eBBggyGhb3UTSfqX4Tupn2tMaq8gowLZrY8xYixHiPvpfeVw==}
+  secretlint@8.5.0:
+    resolution: {integrity: sha512-b/X+uHWNbrHZBcPmfHyYGFeNUGOycvFboBmV/zqo7Rti7fnLhYllcSi8WvsRROki7bFFoslEbcqPYnTzJF4k6Q==}
     engines: {node: ^14.13.1 || >=16.0.0}
     hasBin: true
 
@@ -16375,13 +16375,13 @@ snapshots:
       refa: 0.12.1
       regexp-ast-analysis: 0.7.1
 
-  secretlint@8.2.3:
+  secretlint@8.5.0:
     dependencies:
       '@secretlint/config-creator': 8.5.0
       '@secretlint/formatter': 8.5.0
       '@secretlint/node': 8.5.0
       '@secretlint/profiler': 8.5.0
-      debug: 4.3.7
+      debug: 4.4.0
       globby: 14.0.2
       meow: 12.1.1
       read-pkg: 8.1.0
