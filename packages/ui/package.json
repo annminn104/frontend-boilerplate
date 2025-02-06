@@ -1,0 +1,55 @@
+{
+  "name": "@fe-boilerplate/ui",
+  "version": "0.0.0",
+  "description": "ui components for frontend-boilerplate",
+  "keywords": [
+    "ui",
+    "tailwindcss",
+    "radix-ui",
+    "shacdn/ui"
+  ],
+  "homepage": "https://github.com/annminn104/frontend-boilerplate/tree/master/packages/ui#readme",
+  "bugs": {
+    "url": "https://github.com/annminn104/frontend-boilerplate/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annminn104/frontend-boilerplate.git",
+    "directory": "packages/ui"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "Anh Minh (Matthew Nguyen)",
+    "email": "annminn100+github@gmail.com",
+    "url": "https://github.com/annminn104"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.1.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.474.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "20.10.7",
+    "@types/react": "18.3.18",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "10.4.20",
+    "glob": "^11.0.1",
+    "postcss": "8.4.47",
+    "tailwindcss": "3.4.17",
+    "vite": "^6.1.0",
+    "vite-plugin-dts": "^4.5.0",
+    "vite-plugin-lib-inject-css": "^2.2.1"
+  },
+  "peerDependencies": {
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
