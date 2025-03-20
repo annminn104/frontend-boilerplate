@@ -1,0 +1,23 @@
+{
+  "name": "@fe-boilerplate/utils",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/",
+    "clean": "rimraf .turbo node_modules dist"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.2.1",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "rimraf": "^5.0.5"
+  }
+}

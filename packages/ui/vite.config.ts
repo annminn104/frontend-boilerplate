@@ -1,6 +1,6 @@
-import { libInjectCss as vitePluginLibInjectCss } from 'vite-plugin-lib-inject-css'
-import vitePluginReact from '@vitejs/plugin-react'
-import vitePluginDts from 'vite-plugin-dts'
+import { libInjectCss } from 'vite-plugin-lib-inject-css'
+import react from '@vitejs/plugin-react'
+import dts from 'vite-plugin-dts'
 import { defineConfig } from 'vite'
 import { fileURLToPath } from 'url'
 import pkg from './package.json'
@@ -11,7 +11,7 @@ import path from 'path'
  * @see https://vitejs.dev/config/
  */
 export default defineConfig({
-  plugins: [vitePluginReact(), vitePluginLibInjectCss(), vitePluginDts({ include: ['src'] })],
+  plugins: [react(), libInjectCss(), dts({ include: ['src'] })],
 
   build: {
     copyPublicDir: false,
@@ -19,9 +19,10 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
+      fileName: 'index',
     },
     rollupOptions: {
-      external: [...Object.keys(pkg?.peerDependencies || {}), 'react/jsx-runtime'],
+      external: ['react', 'react-dom'],
       input: Object.fromEntries(
         /*
          * @see https://vitejs.dev/guide/api-plugin.html#vite-plugin-lib-inject-css*
@@ -39,8 +40,14 @@ export default defineConfig({
         assetFileNames: 'assets/[name][extname]',
         entryFileNames: '[name].js',
         chunkFileNames: `[name].js`,
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
       },
     },
+    cssCodeSplit: true,
+    sourcemap: true,
   },
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],

@@ -1,6 +1,7 @@
 {
   "name": "@fe-boilerplate/tsconfig-config",
   "version": "0.0.0",
+  "private": true,
   "description": "tsconfig configuration for projects.",
   "keywords": [
     "tsconfig",
@@ -23,11 +24,9 @@
   },
   "main": "src/base.json",
   "files": [
-    "src/base.json",
-    "src/jest.json",
-    "src/package.json",
-    "src/nextjs.json",
-    "src/react-library.json"
+    "base.json",
+    "nextjs.json",
+    "react-library.json"
   ],
   "scripts": {
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
