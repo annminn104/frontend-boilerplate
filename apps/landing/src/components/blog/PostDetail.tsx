@@ -9,12 +9,19 @@ import { Dialog } from '@/components/ui/Dialog'
 import { PostForm } from './PostForm'
 import { CommentForm } from './CommentForm'
 import { CommentList } from './CommentList'
-import type { Post } from '@/lib/validations/blog'
+import type { Post } from '@/types/blog'
 
 interface PostDetailProps {
-  post: Post & {
+  post: {
     id: string
-    author: { name: string }
+    title: string
+    content: string
+    published: boolean
+    author: {
+      id: string
+      name: string
+      clerkId: string
+    }
     comments: Array<{
       id: string
       content: string
@@ -24,7 +31,10 @@ interface PostDetailProps {
       }
       createdAt: Date
     }>
-    _count: { likes: number; comments: number }
+    _count: {
+      likes: number
+      comments: number
+    }
   }
   isOwner: boolean
 }

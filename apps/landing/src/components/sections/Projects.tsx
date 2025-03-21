@@ -4,15 +4,16 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { trpc } from '@/lib/trpc'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import type { Project, PortfolioSection, ProjectsContent } from '@/types/portfolio'
 
 export function Projects() {
   const { data: section, isLoading } = trpc.portfolio.getSection.useQuery('projects', {
     initialData: {
-      type: 'projects',
+      type: 'projects' as const,
       title: 'Projects',
       content: { projects: [] },
       order: 0,
-    },
+    } satisfies PortfolioSection,
   })
 
   if (isLoading) {
@@ -23,7 +24,7 @@ export function Projects() {
     )
   }
 
-  const projects = section?.content?.projects || []
+  const projects = (section?.content as ProjectsContent)?.projects || []
 
   return (
     <section className="py-20 bg-white dark:bg-gray-900">
@@ -31,7 +32,7 @@ export function Projects() {
         <h2 className="text-4xl font-bold text-center mb-12">{section?.title || 'Projects'}</h2>
         {projects.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project: any) => (
+            {projects.map((project: Project) => (
               <motion.div
                 key={project.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -46,7 +47,7 @@ export function Projects() {
                   <h3 className="text-xl font-bold mb-2">{project.title}</h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech: string) => (
+                    {project.technologies.map(tech => (
                       <span
                         key={tech}
                         className="px-3 py-1 text-sm bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 rounded-full"
