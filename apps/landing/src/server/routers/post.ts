@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { router, publicProcedure, protectedProcedure } from '../trpc'
 import { postSchema } from '@/lib/validations/blog'
 import { TRPCError } from '@trpc/server'
-import { Post } from '@prisma/client'
+import { Post } from '@/types/blog'
 
 export const postRouter = router({
   // Get all published posts
@@ -16,6 +16,16 @@ export const postRouter = router({
             email: true,
           },
         },
+        comments: {
+          include: {
+            author: {
+              select: {
+                name: true,
+                email: true,
+              },
+            },
+          },
+        },
         _count: {
           select: { likes: true, comments: true },
         },
@@ -27,6 +37,16 @@ export const postRouter = router({
       ...post,
       author: {
         name: post.author.name || post.author.email.split('@')[0],
+      },
+      comments: post.comments.map(comment => ({
+        ...comment,
+        author: {
+          name: comment.author.name || comment.author.email.split('@')[0],
+        },
+      })),
+      _count: {
+        likes: post._count.likes,
+        comments: post._count.comments,
       },
     })) as Post[]
   }),

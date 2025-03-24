@@ -1,14 +1,23 @@
-export interface Post {
+import { Post as PrismaPost, Comment } from '@prisma/client'
+
+interface Author {
   id: string
-  title: string
-  content: string
-  published: boolean
-  authorId: string
-  createdAt: Date
-  updatedAt: Date
+  name: string
+  email: string
+  clerkId: string
+}
+
+interface CommentWithAuthor extends Omit<Comment, 'author'> {
   author: {
+    id: string
     name: string
+    email: string
   }
+}
+
+export interface Post extends Omit<PrismaPost, 'author' | 'comments'> {
+  author: Author
+  comments: CommentWithAuthor[]
   _count: {
     likes: number
     comments: number
