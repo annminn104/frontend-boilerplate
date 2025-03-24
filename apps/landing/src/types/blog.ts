@@ -1,4 +1,4 @@
-import { Post as PrismaPost, Comment } from '@prisma/client'
+import { Post as PrismaPost, Comment } from '@/generated/client'
 
 interface Author {
   id: string

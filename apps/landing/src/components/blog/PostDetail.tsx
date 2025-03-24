@@ -8,6 +8,7 @@ import { trpc } from '@/lib/trpc'
 import { CommentForm } from './CommentForm'
 import { CommentList } from './CommentList'
 import type { Post } from '@/types/blog'
+import { format } from 'date-fns'
 
 interface PostDetailProps {
   post: Post
@@ -42,6 +43,7 @@ export function PostDetail({ post, isOwner }: PostDetailProps) {
     <motion.article initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-3xl mx-auto">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
+        <div className="text-sm text-gray-500">{format(new Date(post.createdAt), 'MMMM dd, yyyy')}</div>
         <div className="prose dark:prose-invert max-w-none mb-6">{post.content}</div>
 
         <div className="flex items-center justify-between text-sm text-gray-500 mb-8">
