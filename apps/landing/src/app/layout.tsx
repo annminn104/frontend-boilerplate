@@ -4,6 +4,7 @@ import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 import { TRPCProvider } from '@/providers/trpc'
 import { Navbar } from '@/components/layout/Navbar'
+import { ThemeProvider } from '@/providers/theme'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -37,8 +38,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClerkProvider>
           <TRPCProvider>
-            <Navbar />
-            <div className="pt-16">{children}</div>
+            <ThemeProvider>
+              <Navbar />
+              <div className="pt-16">{children}</div>
+            </ThemeProvider>
           </TRPCProvider>
         </ClerkProvider>
       </body>
