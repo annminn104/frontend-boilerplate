@@ -17,7 +17,6 @@
     "@fe-boilerplate/ui": "workspace:*",
     "@hookform/resolvers": "^3.10.0",
     "@prisma/client": "6.5.0",
-    "@radix-ui/react-dialog": "^1.1.6",
     "@supabase/supabase-js": "2.49.1",
     "@tanstack/react-query": "5.69.0",
     "@trpc/client": "11.0.0-rc.840",
@@ -29,13 +28,13 @@
     "lucide-react": "^0.474.0",
     "next": "15.2.3",
     "next-themes": "^0.4.4",
+    "prisma": "6.5.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-hook-form": "^7.54.2",
     "superjson": "2.2.2",
     "svix": "^1.62.0",
-    "zod": "^3.24.1",
-    "prisma": "6.5.0"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -45,12 +44,8 @@
     "@types/node": "^20.17.24",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
-    "autoprefixer": "^10.4.17",
     "eslint": "^9.22.0",
     "eslint-config-next": "15.2.3",
-    "postcss": "^8.4.35",
-    "tailwindcss": "4.0.15",
-    "typescript": "^5.7.3",
-    "vitest": "^3.0.9"
+    "typescript": "^5.7.3"
   }
 }

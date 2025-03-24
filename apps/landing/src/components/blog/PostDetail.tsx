@@ -5,11 +5,8 @@ import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useAuth } from '@clerk/nextjs'
 import { trpc } from '@/lib/trpc'
-import { Dialog } from '@/components/ui/Dialog'
-import { PostForm } from './PostForm'
 import { CommentForm } from './CommentForm'
 import { CommentList } from './CommentList'
-import type { Post } from '@/types/blog'
 
 interface PostDetailProps {
   post: {
@@ -110,15 +107,6 @@ export function PostDetail({ post, isOwner }: PostDetailProps) {
           <CommentList comments={post.comments} postId={post.id} />
         </div>
       </div>
-
-      <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <Dialog.Content>
-          <Dialog.Header>
-            <Dialog.Title>Edit Post</Dialog.Title>
-          </Dialog.Header>
-          <PostForm post={post} onSuccess={() => setIsEditOpen(false)} />
-        </Dialog.Content>
-      </Dialog>
     </motion.article>
   )
 }

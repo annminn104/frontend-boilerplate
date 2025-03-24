@@ -6,7 +6,11 @@
     "declaration": true,
     "jsx": "react-jsx",
     "resolveJsonModule": true,
-    "module": "ESNext"
+    "module": "ESNext",
+    "baseUrl": ".",
+    "paths": {
+      "@fe-boilerplate/ui/*": ["src/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

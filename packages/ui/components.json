@@ -11,10 +11,10 @@
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "@workspace/ui/components",
-    "utils": "@workspace/ui/lib/utils",
-    "hooks": "@workspace/ui/hooks",
-    "lib": "@workspace/ui/lib",
-    "ui": "@workspace/ui/components"
+    "components": "@fe-boilerplate/ui/components",
+    "utils": "@fe-boilerplate/ui/lib/utils",
+    "hooks": "@fe-boilerplate/ui/hooks",
+    "lib": "@fe-boilerplate/ui/lib",
+    "ui": "@fe-boilerplate/ui/components"
   }
 }

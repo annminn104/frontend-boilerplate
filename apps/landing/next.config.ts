@@ -2,7 +2,7 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['@trpc/server', '@trpc/client', '@fe-boilerplate/ui', 'geist'],
+  transpilePackages: ['@trpc/server', '@trpc/client', '@fe-boilerplate/ui'],
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
