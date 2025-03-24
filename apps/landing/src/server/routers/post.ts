@@ -12,8 +12,10 @@ export const postRouter = router({
       include: {
         author: {
           select: {
+            id: true,
             name: true,
             email: true,
+            clerkId: true,
           },
         },
         comments: {
@@ -33,9 +35,12 @@ export const postRouter = router({
       orderBy: { createdAt: 'desc' },
     })
 
-    return posts.map(post => ({
+    const result = posts.map(post => ({
       ...post,
       author: {
+        id: post.author.id,
+        email: post.author.email,
+        clerkId: post.author.clerkId,
         name: post.author.name || post.author.email.split('@')[0],
       },
       comments: post.comments.map(comment => ({
@@ -48,7 +53,9 @@ export const postRouter = router({
         likes: post._count.likes,
         comments: post._count.comments,
       },
-    })) as Post[]
+    }))
+
+    return result
   }),
 
   // Get a single post by ID
