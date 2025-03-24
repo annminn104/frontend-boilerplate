@@ -48,5 +48,13 @@
     "eslint": "^9.22.0",
     "eslint-config-next": "15.2.3",
     "typescript": "5.7.3"
+  },
+  "build": {
+    "files": [
+      {
+        "from": "node_modules/.prisma/client/",
+        "to": "node_modules/.prisma/client/"
+      }
+    ]
   }
 }
