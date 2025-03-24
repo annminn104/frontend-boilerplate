@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { router, publicProcedure, protectedProcedure } from '../trpc'
 import { postSchema } from '@/lib/validations/blog'
 import { TRPCError } from '@trpc/server'
-import type { Post } from '@/types/blog'
+import { Post } from '@prisma/client'
 
 export const postRouter = router({
   // Get all published posts
