@@ -7,32 +7,34 @@ import { useAuth } from '@clerk/nextjs'
 import { trpc } from '@/lib/trpc'
 import { CommentForm } from './CommentForm'
 import { CommentList } from './CommentList'
+import { Post, Comment } from '@prisma/client'
+
+interface Author {
+  id: string
+  name: string
+  email: string
+  clerkId: string
+}
+
+interface CommentWithAuthor extends Omit<Comment, 'author'> {
+  author: {
+    id: string
+    name: string
+    email: string
+  }
+}
+
+interface PostWithRelations extends Omit<Post, 'author' | 'comments'> {
+  author: Author
+  comments: CommentWithAuthor[]
+  _count: {
+    likes: number
+    comments: number
+  }
+}
 
 interface PostDetailProps {
-  post: {
-    id: string
-    title: string
-    content: string
-    published: boolean
-    author: {
-      id: string
-      name: string
-      clerkId: string
-    }
-    comments: Array<{
-      id: string
-      content: string
-      author: {
-        id: string
-        name: string
-      }
-      createdAt: Date
-    }>
-    _count: {
-      likes: number
-      comments: number
-    }
-  }
+  post: PostWithRelations
   isOwner: boolean
 }
 
