@@ -9,7 +9,8 @@
     "lint": "next lint",
     "prisma:studio": "prisma studio",
     "prisma:generate": "prisma generate",
-    "prisma:push": "prisma db push"
+    "prisma:push": "prisma db push",
+    "prepare": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "6.12.6",
@@ -51,13 +52,5 @@
     "tailwindcss": "4.0.15",
     "typescript": "^5.7.3",
     "vitest": "^3.0.9"
-  },
-  "build": {
-    "files": [
-      {
-        "from": "node_modules/.prisma/client/",
-        "to": "node_modules/.prisma/client/"
-      }
-    ]
   }
 }

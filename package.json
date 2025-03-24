@@ -29,11 +29,12 @@
     "lint:turbo": "turbo lint --parallel",
     "lint:types": "turbo lint:types --parallel",
     "lint:dist": "turbo lint:dist --parallel",
-    "prepare": "is-ci || husky install",
+    "prepare": "husky install",
     "prettier:fix": "prettier --write .",
     "test": "jest",
     "test:e2e": "turbo run test:e2e --concurrency=1",
-    "test:unit": "turbo run test --concurrency=1 "
+    "test:unit": "turbo run test --concurrency=1 ",
+    "prisma:generate": "turbo run prisma:generate"
   },
   "dependencies": {
     "husky": "^9.0.11",

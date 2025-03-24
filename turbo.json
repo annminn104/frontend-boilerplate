@@ -5,6 +5,18 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
+    "landing#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "prisma:generate": {
+      "dependsOn": ["^prisma:generate"],
+      "outputs": ["node_modules/.prisma/client/**"]
+    },
+    "prisma:push": {
+      "dependsOn": ["^prisma:push"],
+      "outputs": ["node_modules/.prisma/client/**"]
+    },
     "lint": {
       "dependsOn": ["^lint"]
     },
