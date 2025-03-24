@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { auth } from '@clerk/nextjs/server'
-import { prisma } from '@/lib/prisma'
+import prisma from '@/lib/prisma'
 import { PostDetail } from '@/components/blog/PostDetail'
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
