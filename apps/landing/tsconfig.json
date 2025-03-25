@@ -17,16 +17,7 @@
     "incremental": true,
     "plugins": [{ "name": "next" }],
     "paths": {
-      "@/*": ["./src/*"],
-      "@/generated/*": ["./src/generated/*"],
-      "@/server/*": ["./src/server/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/lib/*": ["./src/lib/*"],
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/utils/*": ["./src/utils/*"],
-      "@/styles/*": ["./src/styles/*"],
-      "@/types/*": ["./src/types/*"],
-      "@fe-boilerplate/ui/*": ["../../packages/ui/src/*"]
+      "@/*": ["./src/*"]
     },
     "baseUrl": "."
   },

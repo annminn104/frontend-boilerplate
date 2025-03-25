@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import path from 'node:path'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -10,7 +11,15 @@ const nextConfig: NextConfig = {
     swcTraceProfiling: true,
     serverActions: {
       allowedOrigins: ['*'],
+      bodySizeLimit: '10mb',
     },
+  },
+  webpack: config => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.join(__dirname, 'src'),
+    }
+    return config
   },
 }
 
