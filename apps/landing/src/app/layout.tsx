@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import '@fe-boilerplate/ui/globals.css'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 import { TRPCProvider } from '@/providers/trpc'
