@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
       allowedOrigins: ['*'],
       bodySizeLimit: '10mb',
     },
+    turbo: {
+      resolveAlias: {
+        '@': path.resolve(__dirname, 'src'),
+      },
+    },
   },
 }
 
