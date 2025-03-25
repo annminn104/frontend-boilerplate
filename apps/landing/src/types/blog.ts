@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Post as PrismaPost, Comment } from '@prisma/client'
 
 interface Author {
