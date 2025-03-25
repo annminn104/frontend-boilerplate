@@ -5,17 +5,17 @@ import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useAuth } from '@clerk/nextjs'
 import { trpc } from '@/lib/trpc'
-import { CommentForm } from './CommentForm'
-import { CommentList } from './CommentList'
 import type { Post } from '@/types/blog'
 import { format } from 'date-fns'
+import CommentList from './CommentList'
+import CommentForm from './CommentForm'
 
 interface PostDetailProps {
   post: Post
   isOwner: boolean
 }
 
-export function PostDetail({ post, isOwner }: PostDetailProps) {
+export default function PostDetail({ post, isOwner }: PostDetailProps) {
   const router = useRouter()
   const { isSignedIn } = useAuth()
   const [isEditOpen, setIsEditOpen] = useState(false)

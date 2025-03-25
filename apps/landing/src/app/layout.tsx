@@ -4,7 +4,7 @@ import '@fe-boilerplate/ui/globals.css'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 import { TRPCProvider } from '@/providers/trpc'
-import { Navbar } from '@/components/layout/Navbar'
+import Navbar from '@/components/layout/Navbar'
 import { ThemeProvider } from '@/providers/theme'
 
 const geistSans = Geist({

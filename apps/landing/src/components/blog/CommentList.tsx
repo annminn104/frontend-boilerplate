@@ -20,7 +20,7 @@ interface CommentListProps {
   postId: string
 }
 
-export function CommentList({ comments, postId }: CommentListProps) {
+export default function CommentList({ comments, postId }: CommentListProps) {
   const { userId } = useAuth()
   const utils = trpc.useContext()
 

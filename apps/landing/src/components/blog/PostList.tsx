@@ -1,10 +1,10 @@
 'use client'
 
 import { trpc } from '@/lib/trpc'
-import { PostCard } from './PostCard'
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import PostCard from './PostCard'
+import LoadingSpinner from '../ui/LoadingSpinner'
 
-export function PostList() {
+export default function PostList() {
   const { data: posts, isLoading } = trpc.post.getAllPublished.useQuery()
 
   if (isLoading) {

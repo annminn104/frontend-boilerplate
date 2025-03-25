@@ -9,7 +9,7 @@ interface PostCardProps {
   post: Pick<Post, 'id' | 'title' | 'content' | 'author' | 'createdAt' | '_count'>
 }
 
-export function PostCard({ post }: PostCardProps) {
+export default function PostCard({ post }: PostCardProps) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}

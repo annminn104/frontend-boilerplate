@@ -13,7 +13,7 @@ const technologies = [
   { name: 'PostgreSQL', icon: '🐘' },
 ]
 
-export function TechStack() {
+export default function TechStack() {
   return (
     <section className="py-20 bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4">

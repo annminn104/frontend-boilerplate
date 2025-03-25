@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { SignInButton } from '../auth/SignInButton'
 import { UserButton } from '../auth/UserButton'
 
-export function Navbar() {
+export default function Navbar() {
   const { isSignedIn, isLoaded } = useAuth()
 
   return (

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { PostForm } from './PostForm'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@fe-boilerplate/ui'
 
-export function CreatePostButton() {
+export default function CreatePostButton() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (

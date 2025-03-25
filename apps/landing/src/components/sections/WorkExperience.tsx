@@ -17,7 +17,7 @@ const experiences = [
   },
 ]
 
-export function WorkExperience() {
+export default function WorkExperience() {
   return (
     <section className="py-20 bg-gray-50 dark:bg-gray-800">
       <div className="container mx-auto px-4">

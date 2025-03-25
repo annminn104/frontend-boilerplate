@@ -3,10 +3,10 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { trpc } from '@/lib/trpc'
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import type { Project, PortfolioSection, ProjectsContent } from '@/types/portfolio'
 
-export function Projects() {
+export default function Projects() {
   const { data: section, isLoading } = trpc.portfolio.getSection.useQuery('projects', {
     initialData: {
       type: 'projects' as const,

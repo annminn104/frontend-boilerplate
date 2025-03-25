@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 
-export function Introduction() {
+export default function Introduction() {
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
       <motion.div

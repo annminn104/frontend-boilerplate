@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 
-export function Contact() {
+export default function Contact() {
   return (
     <section className="py-20 bg-gray-50 dark:bg-gray-800">
       <div className="container mx-auto px-4">

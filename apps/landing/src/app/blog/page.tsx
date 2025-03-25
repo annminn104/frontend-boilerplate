@@ -1,6 +1,6 @@
 import { auth } from '@clerk/nextjs/server'
-import { PostList } from '@/components/blog/PostList'
-import { CreatePostButton } from '@/components/blog/CreatePostButton'
+import PostList from '@/components/blog/PostList'
+import CreatePostButton from '@/components/blog/CreatePostButton'
 
 export default async function BlogPage() {
   const { userId } = await auth()
