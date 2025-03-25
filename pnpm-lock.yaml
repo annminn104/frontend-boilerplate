@@ -159,9 +159,6 @@ importers:
       next-themes:
         specifier: 0.4.6
         version: 0.4.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      prisma:
-        specifier: 6.5.0
-        version: 6.5.0(typescript@5.7.3)
       react:
         specifier: 19.0.0
         version: 19.0.0
@@ -208,6 +205,9 @@ importers:
       eslint-config-next:
         specifier: 15.2.3
         version: 15.2.3(eslint-plugin-import-x@4.9.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3)
+      prisma:
+        specifier: 6.5.0
+        version: 6.5.0(typescript@5.7.3)
       typescript:
         specifier: 5.7.3
         version: 5.7.3
