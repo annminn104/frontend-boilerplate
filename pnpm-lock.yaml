@@ -114,6 +114,9 @@ importers:
       '@clerk/nextjs':
         specifier: 6.12.6
         version: 6.12.6(next@15.2.3(@babel/core@7.26.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@fe-boilerplate/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@fe-boilerplate/ui':
         specifier: workspace:*
         version: link:../../packages/ui

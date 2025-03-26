@@ -1,9 +1,9 @@
-import type { NextConfig } from 'next'
-import path from 'node:path'
+import { type NextConfig } from 'next'
+import path from 'path'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['@trpc/server', '@trpc/client', '@fe-boilerplate/ui'],
+  transpilePackages: ['@trpc/server', '@trpc/client', '@fe-boilerplate/ui', '@fe-boilerplate/core'],
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
@@ -13,11 +13,13 @@ const nextConfig: NextConfig = {
       allowedOrigins: ['*'],
       bodySizeLimit: '10mb',
     },
-    turbo: {
-      resolveAlias: {
-        '@': path.resolve(__dirname, 'src'),
-      },
-    },
+  },
+  webpack: (config, { isServer }) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.join(__dirname, 'src'),
+    }
+    return config
   },
 }
 
