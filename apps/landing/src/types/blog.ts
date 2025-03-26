@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Post as PrismaPost, Comment } from '@prisma/client'
+import { Post as PrismaPost, Comment } from '@fe-boilerplate/core'
 
 interface Author {
   id: string

@@ -9,8 +9,7 @@
     "lint": "next lint",
     "prisma:studio": "prisma studio",
     "prisma:generate": "prisma generate",
-    "prisma:push": "prisma db push",
-    "postinstall": "prisma generate"
+    "prisma:push": "prisma db push"
   },
   "dependencies": {
     "@clerk/nextjs": "6.12.6",
