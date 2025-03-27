@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  landing:
+    container_name: landing
+    build:
+      context: .
+      dockerfile: ./apps/landing/Dockerfile
+    restart: always
+    ports:
+      - 5030:5030
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    external: true

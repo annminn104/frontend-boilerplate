@@ -16,12 +16,18 @@
     "jsx": "preserve",
     "incremental": true,
     "plugins": [{ "name": "next" }],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@fe-boilerplate/ui/*": ["../../packages/ui/src/*"],
-      "@fe-boilerplate/core/*": ["../../packages/core/src/*"]
-    },
-    "baseUrl": "."
+      "@/server/*": ["./src/server/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/styles/*": ["./src/styles/*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/types/*": ["./src/types/*"],
+      "@fe-boilerplate/ui/*": ["../../packages/ui/src/*"]
+    }
   },
   "include": ["next-env.d.ts", "next.config.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
