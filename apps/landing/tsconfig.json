@@ -17,9 +17,7 @@
     "incremental": true,
     "plugins": [{ "name": "next" }],
     "paths": {
-      "@/*": ["./src/*"],
-      "@fe-boilerplate/ui/*": ["../../packages/ui/src/*"],
-      "@fe-boilerplate/core/*": ["../../packages/core/src/*"]
+      "@/*": ["./src/*"]
     },
     "baseUrl": "."
   },
