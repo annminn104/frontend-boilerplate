@@ -18,8 +18,8 @@
     "plugins": [{ "name": "next" }],
     "paths": {
       "@/*": ["./src/*"],
-      "@fe-boilerplate/ui/*": ["../../packages/ui/src/*"],
-      "@fe-boilerplate/core/*": ["../../packages/core/src/*"]
+      "@fe-boilerplate/ui/*": ["../../../../packages/ui/src/*"],
+      "@fe-boilerplate/core/*": ["../../../../packages/core/src/*"]
     },
     "baseUrl": "."
   },
