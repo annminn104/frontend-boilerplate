@@ -1,4 +1,4 @@
-import { Post as PrismaPost, Comment } from '@fe-boilerplate/core/prisma/client/default.js'
+import { Post as PrismaPost, Comment } from '@fe-boilerplate/core/prisma/client'
 
 interface Author {
   id: string

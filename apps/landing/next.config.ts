@@ -18,6 +18,8 @@ const nextConfig: NextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': path.join(__dirname, 'src'),
+      '@fe-boilerplate/ui': path.join(__dirname, '../../packages/ui/src'),
+      '@fe-boilerplate/core': path.join(__dirname, '../../packages/core/src'),
     }
     return config
   },
