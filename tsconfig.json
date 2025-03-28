@@ -1,5 +1,5 @@
 {
-  "extends": "@fe-boilerplate/tsconfig-config/base.json",
+  "extends": "./packages/configs/tsconfig-config/src/base.json",
   "compilerOptions": {
     "baseUrl": "."
   },
