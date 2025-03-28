@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  plugins: [new PrismaPlugin()],
 
   experimental: {
     swcTraceProfiling: true,
@@ -19,6 +18,13 @@ const nextConfig: NextConfig = {
       allowedOrigins: ['*'],
       bodySizeLimit: '10mb',
     },
+  },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()]
+    }
+
+    return config
   },
 }
 
