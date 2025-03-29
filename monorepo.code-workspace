@@ -5,12 +5,8 @@
       "path": ".",
     },
     {
-      "name": "🍂 landing page",
-      "path": "apps/landing",
-    },
-    {
-      "name": "🍂 portal app",
-      "path": "apps/portal",
+      "name": "🍂 portfolio page",
+      "path": "apps/portfolio",
     },
     {
       "name": "📦 hooks",
@@ -82,7 +78,7 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
+      "source.fixAll.eslint": "explicit",
     },
     // Disable vscode formatting for js,jsx,ts,tsx files
     // to allow dbaeumer.vscode-eslint to format them
@@ -92,8 +88,7 @@
     "eslint.alwaysShowStatus": true,
     // https://github.com/Microsoft/vscode-eslint#mono-repository-setup
     "eslint.workingDirectories": [
-      "./apps/landing",
-      "./apps/portal",
+      "./apps/portfolio",
       "./packages/common/hooks",
       "./packages/common/services",
       "./packages/ui",

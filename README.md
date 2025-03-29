@@ -10,7 +10,7 @@
 - [ ] Init packages common: hooks, services, etc.
 - [ ] Init Storybook.
 - [ ] Init packages utilities.
-- [ ] Init Landing: NextJS 15 App-router integration @tanstack-query, zustand, clerk, tRPC, etc.
+- [ ] Init Portfolio: NextJS 15 App-router integration @tanstack-query, zustand, clerk, tRPC, etc.
 - [ ] Init Portal: ReactJS integration @tanstack-router, @tanstack-query, zustand, clerk, tRPC, etc.
 - [ ] Integration Unit testing with Jest or Vitest.
 - [ ] Integration E2E testing with playwright.

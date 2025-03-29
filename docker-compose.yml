@@ -1,11 +1,11 @@
 version: '3'
 
 services:
-  landing:
-    container_name: landing
+  portfolio:
+    container_name: portfolio
     build:
       context: .
-      dockerfile: ./apps/landing/Dockerfile
+      dockerfile: ./apps/portfolio/Dockerfile
     restart: always
     ports:
       - 5030:5030

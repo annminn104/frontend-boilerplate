@@ -1,7 +1,7 @@
-// @ts-ignore
+// @ts-nocheck
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
 
-import { type NextConfig } from 'next'
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   output: 'standalone',
