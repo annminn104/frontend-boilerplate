@@ -2,12 +2,16 @@ import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import prisma from '@/lib/prisma'
+import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
   // Verify webhook signature
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
   if (!WEBHOOK_SECRET) {
-    throw new Error('Please add CLERK_WEBHOOK_SECRET from Clerk Dashboard to .env')
+    throw NextResponse.json(
+      { message: 'Please add CLERK_WEBHOOK_SECRET from Clerk Dashboard to .env' },
+      { status: 500 }
+    )
   }
 
   const headerPayload = await headers()
@@ -16,18 +20,13 @@ export async function POST(req: Request) {
   const svix_signature = headerPayload.get('svix-signature')
 
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response('Error occured -- no svix headers', {
-      status: 400,
-    })
+    return NextResponse.json({ message: 'Error occured -- no svix headers' }, { status: 400 })
   }
 
   // Get the body
   const payload = await req.json()
-  console.log('request', req)
 
   const body = JSON.stringify(payload)
-
-  console.log('body', body)
 
   // Create a new Svix instance with your secret
   const wh = new Webhook(WEBHOOK_SECRET)
@@ -40,21 +39,11 @@ export async function POST(req: Request) {
       'svix-timestamp': svix_timestamp,
       'svix-signature': svix_signature,
     }) as WebhookEvent
-
-    console.log('evt', evt)
-  } catch (err) {
-    console.error('Error verifying webhook:', err)
-    return Response.json(
-      { message: 'Error occured' },
-      {
-        status: 400,
-      }
-    )
+  } catch (error) {
+    return NextResponse.json({ message: 'Error occurred', error }, { status: 400 })
   }
 
   const eventType = evt.type
-
-  console.log('eventType', eventType)
 
   if (eventType === 'user.created' || eventType === 'user.updated') {
     const { id, email_addresses, username, first_name, last_name } = evt.data
@@ -63,11 +52,11 @@ export async function POST(req: Request) {
     const name = [first_name, last_name].filter(Boolean).join(' ') || username || email?.split('@')[0]
 
     if (!email) {
-      return Response.json({ message: 'No email found' }, { status: 400 })
+      return NextResponse.json({ message: 'No email found' }, { status: 400 })
     }
 
     try {
-      await prisma.user.upsert({
+      const user = await prisma.user.upsert({
         where: { clerkId: id },
         create: {
           clerkId: id,
@@ -80,10 +69,9 @@ export async function POST(req: Request) {
         },
       })
 
-      return Response.json({ message: 'User synchronized' }, { status: 200 })
+      return NextResponse.json({ message: 'User synchronized', user }, { status: 200 })
     } catch (error) {
-      console.error('Error syncing user:', error)
-      return Response.json({ message: 'Error syncing user' }, { status: 500 })
+      return NextResponse.json({ message: 'Error syncing user', error }, { status: 500 })
     }
   }
 
@@ -91,18 +79,17 @@ export async function POST(req: Request) {
     const { id } = evt.data
 
     try {
-      await prisma.user.delete({
+      const user = await prisma.user.delete({
         where: { clerkId: id },
       })
 
-      return Response.json({ message: 'User deleted' }, { status: 200 })
+      return NextResponse.json({ message: 'User deleted', user }, { status: 200 })
     } catch (error) {
-      console.error('Error deleting user:', error)
-      return Response.json({ message: 'Error deleting user' }, { status: 500 })
+      return NextResponse.json({ message: 'Error deleting user', error }, { status: 500 })
     }
   }
 
-  return Response.json({ message: 'Webhook received' }, { status: 200 })
+  return NextResponse.json({ message: 'Webhook received' }, { status: 200 })
 }
 
 export const runtime = 'edge'
