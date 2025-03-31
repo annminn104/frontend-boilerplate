@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: process.env.NODE_ENV !== 'production',
   transpilePackages: ['@trpc/server', '@trpc/client', '@fe-boilerplate/ui', '@fe-boilerplate/core'],
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    // removeConsole: process.env.NODE_ENV === 'production',
   },
 
   experimental: {

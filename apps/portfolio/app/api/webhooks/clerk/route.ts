@@ -38,12 +38,17 @@ export async function POST(req: Request) {
     }) as WebhookEvent
   } catch (err) {
     console.error('Error verifying webhook:', err)
-    return new Response('Error occured', {
-      status: 400,
-    })
+    return Response.json(
+      { message: 'Error occured' },
+      {
+        status: 400,
+      }
+    )
   }
 
   const eventType = evt.type
+
+  console.log('eventType', eventType)
 
   if (eventType === 'user.created' || eventType === 'user.updated') {
     const { id, email_addresses, username, first_name, last_name } = evt.data
@@ -52,7 +57,7 @@ export async function POST(req: Request) {
     const name = [first_name, last_name].filter(Boolean).join(' ') || username || email?.split('@')[0]
 
     if (!email) {
-      return new Response('No email found', { status: 400 })
+      return Response.json({ message: 'No email found' }, { status: 400 })
     }
 
     try {
@@ -69,10 +74,10 @@ export async function POST(req: Request) {
         },
       })
 
-      return new Response('User synchronized', { status: 200 })
+      return Response.json({ message: 'User synchronized' }, { status: 200 })
     } catch (error) {
       console.error('Error syncing user:', error)
-      return new Response('Error syncing user', { status: 500 })
+      return Response.json({ message: 'Error syncing user' }, { status: 500 })
     }
   }
 
@@ -84,14 +89,14 @@ export async function POST(req: Request) {
         where: { clerkId: id },
       })
 
-      return new Response('User deleted', { status: 200 })
+      return Response.json({ message: 'User deleted' }, { status: 200 })
     } catch (error) {
       console.error('Error deleting user:', error)
-      return new Response('Error deleting user', { status: 500 })
+      return Response.json({ message: 'Error deleting user' }, { status: 500 })
     }
   }
 
-  return new Response('Webhook received', { status: 200 })
+  return Response.json({ message: 'Webhook received' }, { status: 200 })
 }
 
 export const runtime = 'edge'
