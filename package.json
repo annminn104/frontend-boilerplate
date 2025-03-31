@@ -53,6 +53,7 @@
     "@fe-boilerplate/secretlint-config": "workspace:*",
     "@fe-boilerplate/stylelint-config": "workspace:*",
     "@fe-boilerplate/tsconfig-config": "workspace:*",
+    "@swc/core": "^1.4.0",
     "@types/prettier": "3.0.0",
     "@types/shell-quote": "1.7.5",
     "actionlint": "2.0.6",
