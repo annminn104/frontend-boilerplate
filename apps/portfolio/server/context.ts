@@ -1,5 +1,5 @@
 import { auth } from '@clerk/nextjs/server'
-import prisma from '@/lib/prisma'
+import { prisma } from '@/lib/prisma'
 
 export async function createContext({ req }: { req: Request }) {
   console.info('createContext', req)

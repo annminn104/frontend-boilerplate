@@ -1,7 +1,7 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
-import prisma from '@/lib/prisma'
+import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
@@ -91,5 +91,3 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ message: 'Webhook received' }, { status: 200 })
 }
-
-export const runtime = 'edge'
