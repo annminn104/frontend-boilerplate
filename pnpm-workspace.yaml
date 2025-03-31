@@ -1,4 +1,13 @@
 packages:
-  - 'apps/*'
-  - 'packages/*'
-  - 'packages/configs/*'
+  - apps/*
+  - packages/*
+  - packages/configs/*
+onlyBuiltDependencies:
+  - '@clerk/shared'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@swc/core'
+  - core-js-pure
+  - esbuild
+  - prisma
+  - sharp
