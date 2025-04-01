@@ -1,65 +1,70 @@
 import { notFound } from 'next/navigation'
-import { auth } from '@clerk/nextjs/server'
 import { prisma } from '@/lib/prisma'
 import PostDetail from '@/components/blog/PostDetail'
+import { isOwner } from '@/lib/auth-utils'
 
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-  const { userId } = await auth()
+type Props = {
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function BlogPostPage({ params }: Props) {
   const { id } = await params
-  const isOwner = userId === process.env.NEXT_PUBLIC_OWNER_USER_ID
+  const isUserOwner = await isOwner()
 
-  const post = await prisma.post.findUnique({
-    where: { id },
-    include: {
-      author: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          clerkId: true,
-        },
-      },
-      comments: {
-        include: {
-          author: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-            },
+  try {
+    // Fetch the post directly with Prisma since we're on the server
+    const post = await prisma.post.findUnique({
+      where: { id },
+      include: {
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            clerkId: true,
           },
         },
-        orderBy: { createdAt: 'desc' },
+        comments: {
+          include: {
+            author: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+              },
+            },
+          },
+          orderBy: { createdAt: 'desc' },
+        },
+        _count: {
+          select: { likes: true, comments: true },
+        },
       },
-      _count: {
-        select: { likes: true, comments: true },
-      },
-    },
-  })
+    })
 
-  if (!post) {
+    if (!post) {
+      notFound()
+    }
+
+    // Transform the data to ensure name is always a string
+    const transformedPost = {
+      ...post,
+      author: {
+        ...post.author,
+        name: post.author.name || post.author.email?.split('@')[0] || 'Anonymous',
+      },
+      comments: post.comments.map(comment => ({
+        ...comment,
+        author: {
+          ...comment.author,
+          name: comment.author.name || comment.author.email?.split('@')[0] || 'Anonymous',
+        },
+      })),
+    }
+
+    return <PostDetail post={transformedPost} isOwner={isUserOwner} />
+  } catch (error) {
     notFound()
   }
-
-  // Transform the data to ensure name is always a string
-  const transformedPost = {
-    ...post,
-    author: {
-      ...post.author,
-      name: post.author.name || post.author.email?.split('@')[0] || 'Anonymous',
-    },
-    comments: post.comments.map(comment => ({
-      ...comment,
-      author: {
-        ...comment.author,
-        name: comment.author.name || comment.author.email?.split('@')[0] || 'Anonymous',
-      },
-    })),
-  }
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <PostDetail post={transformedPost} isOwner={isOwner} />
-    </div>
-  )
 }

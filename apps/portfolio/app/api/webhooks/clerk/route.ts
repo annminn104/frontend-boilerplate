@@ -56,12 +56,20 @@ export async function POST(req: Request) {
     }
 
     try {
+      // Check if this is the first user in the system
+      const userCount = await prisma.user.count()
+      const isFirstUser = userCount === 0
+
+      // First user gets OWNER role, rest get USER role
+      const role = isFirstUser ? 'OWNER' : 'USER'
+
       const user = await prisma.user.upsert({
         where: { clerkId: id },
         create: {
           clerkId: id,
           email: email,
           name: name,
+          role: role,
         },
         update: {
           email: email,

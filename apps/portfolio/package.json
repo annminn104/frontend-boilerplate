@@ -10,6 +10,12 @@
     "prisma:studio": "prisma studio",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
+    "prisma:seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
+    "prisma:migrate": "node scripts/migrate.js",
+    "prisma:migrate:init": "node scripts/migrate.js init",
+    "prisma:migrate:deploy": "node scripts/migrate.js deploy",
+    "prisma:migrate:reset": "node scripts/migrate.js reset",
+    "db:setup": "node scripts/setup-db.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {
@@ -26,6 +32,7 @@
     "@trpc/next": "11.0.0-rc.840",
     "@trpc/react-query": "11.0.0-rc.840",
     "@trpc/server": "11.0.0-rc.840",
+    "bcryptjs": "^2.4.3",
     "date-fns": "4.1.0",
     "framer-motion": "12.5.0",
     "lucide-react": "0.483.0",
@@ -44,6 +51,7 @@
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
+    "@types/bcryptjs": "^2.4.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -51,6 +59,7 @@
     "eslint-config-next": "15.2.4",
     "svix": "1.62.0",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.1",
     "typescript": "5.7.3"
   },
   "build": {
@@ -60,5 +69,8 @@
         "to": "node_modules/.prisma/client/"
       }
     ]
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   }
 }

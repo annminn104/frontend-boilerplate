@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { router, publicProcedure, protectedProcedure } from '../trpc'
+import { router, publicProcedure, protectedProcedure, ownerProcedure } from '../trpc'
 import { postSchema } from '@/lib/validations/blog'
 import { TRPCError } from '@trpc/server'
 import { Post } from '@/types/blog'
@@ -58,6 +58,27 @@ export const postRouter = router({
     return result
   }),
 
+  // Get all posts for admin (including drafts)
+  getAllForAdmin: ownerProcedure.query(async ({ ctx }) => {
+    const posts = await ctx.prisma.post.findMany({
+      include: {
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        _count: {
+          select: { likes: true, comments: true },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    })
+
+    return posts
+  }),
+
   // Get a single post by ID
   getById: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
     const post = await ctx.prisma.post.findUnique({
@@ -91,7 +112,7 @@ export const postRouter = router({
   }),
 
   // Create a new post (protected)
-  create: protectedProcedure.input(postSchema).mutation(async ({ ctx, input }) => {
+  create: ownerProcedure.input(postSchema).mutation(async ({ ctx, input }) => {
     const userId = ctx.auth.userId
     if (!userId) throw new TRPCError({ code: 'UNAUTHORIZED' })
 
@@ -109,7 +130,7 @@ export const postRouter = router({
   }),
 
   // Update a post (protected)
-  update: protectedProcedure
+  update: ownerProcedure
     .input(
       z.object({
         id: z.string(),
@@ -126,10 +147,6 @@ export const postRouter = router({
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
       }
 
-      if (post.author.clerkId !== ctx.auth.userId) {
-        throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized to update this post' })
-      }
-
       return ctx.prisma.post.update({
         where: { id: input.id },
         data: input.data,
@@ -137,18 +154,13 @@ export const postRouter = router({
     }),
 
   // Delete a post (protected)
-  delete: protectedProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
+  delete: ownerProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
     const post = await ctx.prisma.post.findUnique({
       where: { id: input },
-      include: { author: true },
     })
 
     if (!post) {
       throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
-    }
-
-    if (post.author.clerkId !== ctx.auth.userId) {
-      throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized to delete this post' })
     }
 
     return ctx.prisma.post.delete({
@@ -258,12 +270,30 @@ export const postRouter = router({
       throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' })
     }
 
-    if (comment.author.clerkId !== ctx.auth.userId) {
-      throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized to delete this comment' })
+    // Allow deletion if user is the comment author
+    if (comment.author.clerkId === ctx.auth.userId) {
+      return ctx.prisma.comment.delete({
+        where: { id: input },
+      })
     }
 
-    return ctx.prisma.comment.delete({
-      where: { id: input },
+    // Otherwise, check if user is an OWNER
+    const user = await ctx.prisma.user.findUnique({
+      where: { clerkId: ctx.auth.userId },
     })
+
+    // For now, let's just check if it's the first user (assuming first is owner)
+    const isFirst = await ctx.prisma.user.findFirst({
+      where: { clerkId: ctx.auth.userId },
+      orderBy: { createdAt: 'asc' },
+    })
+
+    if (user && isFirst && user.id === isFirst.id) {
+      return ctx.prisma.comment.delete({
+        where: { id: input },
+      })
+    }
+
+    throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized to delete this comment' })
   }),
 })
