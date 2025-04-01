@@ -4,7 +4,11 @@ import { trpc } from '@/lib/trpc'
 import PostCard from './PostCard'
 import LoadingSpinner from '../ui/LoadingSpinner'
 
-export default function PostList() {
+interface PostListProps {
+  isOwner: boolean
+}
+
+export default function PostList({ isOwner }: PostListProps) {
   const { data: posts, isLoading } = trpc.post.getAllPublished.useQuery()
 
   if (isLoading) {
@@ -22,7 +26,7 @@ export default function PostList() {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {posts.map(post => (
-        <PostCard key={post.id} post={post} />
+        <PostCard key={post.id} post={post} isOwner={isOwner} />
       ))}
     </div>
   )

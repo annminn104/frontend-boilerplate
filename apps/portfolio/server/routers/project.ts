@@ -49,10 +49,11 @@ export const projectRouter = router({
         throw new TRPCError({ code: 'FORBIDDEN', message: 'Project is not published' })
       }
 
-      // Get the first user in the system (owner)
-      const firstUser = await ctx.prisma.user.findFirst({
-        orderBy: {
-          createdAt: 'asc',
+      // (owner)
+      const owner = await ctx.prisma.user.findUnique({
+        where: {
+          clerkId: ctx.auth.userId,
+          role: 'OWNER',
         },
       })
 
@@ -65,7 +66,7 @@ export const projectRouter = router({
         })
 
         // If current user is the owner, allow access
-        if (currentUser && firstUser && currentUser.id === firstUser.id) {
+        if (currentUser && owner && currentUser.id === owner.id) {
           return project
         }
       }

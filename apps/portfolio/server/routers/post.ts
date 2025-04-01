@@ -282,13 +282,12 @@ export const postRouter = router({
       where: { clerkId: ctx.auth.userId },
     })
 
-    // For now, let's just check if it's the first user (assuming first is owner)
-    const isFirst = await ctx.prisma.user.findFirst({
-      where: { clerkId: ctx.auth.userId },
-      orderBy: { createdAt: 'asc' },
+    // Check if user is an OWNER
+    const isOwner = await ctx.prisma.user.findUnique({
+      where: { clerkId: ctx.auth.userId, role: 'OWNER' },
     })
 
-    if (user && isFirst && user.id === isFirst.id) {
+    if (user && isOwner && user.id === isOwner.id) {
       return ctx.prisma.comment.delete({
         where: { id: input },
       })

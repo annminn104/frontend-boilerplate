@@ -3,24 +3,22 @@ import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 
 /**
- * Check if a user has the OWNER role (first user in the system)
+ * Check if a user has the OWNER role
  */
 export async function isOwner(): Promise<boolean> {
   const { userId } = await auth()
   if (!userId) return false
 
   // Get the first user in the system (by createdAt)
-  const firstUser = await prisma.user.findFirst({
+  const owner = await prisma.user.findUnique({
     where: {
       clerkId: userId,
-    },
-    orderBy: {
-      createdAt: 'asc',
+      role: 'OWNER',
     },
   })
 
   // If this user is the first user, consider them an owner
-  return !!firstUser && firstUser.clerkId === userId
+  return !!owner && owner.clerkId === userId
 }
 
 /**

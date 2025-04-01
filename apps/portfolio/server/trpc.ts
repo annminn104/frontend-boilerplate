@@ -34,10 +34,10 @@ const isOwner = t.middleware(async ({ next, ctx }) => {
     throw new TRPCError({ code: 'UNAUTHORIZED' })
   }
 
-  // Get the first user in the system (by createdAt)
-  const firstUser = await ctx.prisma.user.findFirst({
-    orderBy: {
-      createdAt: 'asc',
+  const owner = await ctx.prisma.user.findUnique({
+    where: {
+      clerkId: ctx.auth.userId,
+      role: 'OWNER',
     },
   })
 
@@ -46,7 +46,7 @@ const isOwner = t.middleware(async ({ next, ctx }) => {
     where: { clerkId: ctx.auth.userId },
   })
 
-  if (!currentUser || !firstUser || currentUser.id !== firstUser.id) {
+  if (!currentUser || !owner || currentUser.id !== owner.id) {
     throw new TRPCError({ code: 'FORBIDDEN', message: 'You must be an owner to perform this action' })
   }
 
