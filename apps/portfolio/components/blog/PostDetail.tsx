@@ -23,19 +23,31 @@ export default function PostDetail({ post, isOwner }: PostDetailProps) {
 
   const deletePost = trpc.post.delete.useMutation({
     onSuccess: () => {
+      // Invalidate all relevant queries
+      utils.post.getAllPublished.invalidate()
+      utils.post.getAllForAdmin.invalidate()
       router.push('/blog')
+      router.refresh()
     },
   })
 
   const toggleLike = trpc.post.toggleLike.useMutation({
     onSuccess: () => {
+      // Invalidate both the post detail and list views
       utils.post.getById.invalidate(post.id)
+      utils.post.getAllPublished.invalidate()
+      router.refresh()
     },
   })
 
   const handleDelete = async () => {
     if (confirm('Are you sure you want to delete this post?')) {
-      await deletePost.mutateAsync(post.id)
+      try {
+        await deletePost.mutateAsync(post.id)
+      } catch (error) {
+        console.error('Failed to delete post:', error)
+        alert('Failed to delete post. Please try again.')
+      }
     }
   }
 
@@ -51,7 +63,7 @@ export default function PostDetail({ post, isOwner }: PostDetailProps) {
           <div className="flex items-center gap-4">
             <button
               onClick={() => toggleLike.mutate(post.id)}
-              disabled={!isSignedIn}
+              disabled={!isSignedIn || toggleLike.isPending}
               className="flex items-center gap-1 hover:text-purple-600 transition-colors disabled:opacity-50"
             >
               <span>{post._count.likes} likes</span>
@@ -70,9 +82,10 @@ export default function PostDetail({ post, isOwner }: PostDetailProps) {
             </button>
             <button
               onClick={handleDelete}
-              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              disabled={deletePost.isPending}
+              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
             >
-              Delete
+              {deletePost.isPending ? 'Deleting...' : 'Delete'}
             </button>
           </div>
         )}

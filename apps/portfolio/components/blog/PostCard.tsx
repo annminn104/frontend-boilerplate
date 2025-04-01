@@ -7,6 +7,7 @@ import { Pencil, Trash2 } from 'lucide-react'
 import { Button } from '@fe-boilerplate/ui'
 import { trpc } from '@/lib/trpc'
 import type { Post } from '@/types/blog'
+import { useRouter } from 'next/navigation'
 
 interface PostCardProps {
   post: Pick<Post, 'id' | 'title' | 'content' | 'author' | 'createdAt' | '_count'>
@@ -14,16 +15,26 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post, isOwner }: PostCardProps) {
+  const router = useRouter()
   const utils = trpc.useContext()
+
   const deletePost = trpc.post.delete.useMutation({
     onSuccess: () => {
+      // Invalidate and refetch
       utils.post.getAllPublished.invalidate()
+      utils.post.getAllForAdmin.invalidate()
+      router.refresh()
     },
   })
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this post?')) {
-      await deletePost.mutateAsync(post.id)
+      try {
+        await deletePost.mutateAsync(post.id)
+      } catch (error) {
+        console.error('Failed to delete post:', error)
+        alert('Failed to delete post. Please try again.')
+      }
     }
   }
 
@@ -57,9 +68,15 @@ export default function PostCard({ post, isOwner }: PostCardProps) {
                 Edit
               </Link>
             </Button>
-            <Button variant="destructive" size="sm" onClick={handleDelete} className="flex items-center gap-2">
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={handleDelete}
+              disabled={deletePost.isPending}
+              className="flex items-center gap-2"
+            >
               <Trash2 className="h-4 w-4" />
-              Delete
+              {deletePost.isPending ? 'Deleting...' : 'Delete'}
             </Button>
           </div>
         )}

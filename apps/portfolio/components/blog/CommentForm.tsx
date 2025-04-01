@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { trpc } from '@/lib/trpc'
 import { commentSchema, type Comment } from '@/lib/validations/blog'
+import { useRouter } from 'next/navigation'
 
 interface CommentFormProps {
   postId: string
@@ -13,6 +14,7 @@ interface CommentFormProps {
 export default function CommentForm({ postId }: CommentFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const utils = trpc.useContext()
+  const router = useRouter()
 
   const {
     register,
@@ -25,20 +27,28 @@ export default function CommentForm({ postId }: CommentFormProps) {
 
   const addComment = trpc.post.addComment.useMutation({
     onSuccess: () => {
+      // Invalidate both post detail and list views
       utils.post.getById.invalidate(postId)
+      utils.post.getAllPublished.invalidate()
+      router.refresh()
       reset()
+    },
+    onError: error => {
+      console.error('Failed to add comment:', error)
+      alert('Failed to add comment. Please try again.')
     },
   })
 
   const onSubmit = async (data: Comment) => {
-    setIsSubmitting(true)
+    if (addComment.isPending) return
+
     try {
       await addComment.mutateAsync({
         postId,
         content: data.content,
       })
-    } finally {
-      setIsSubmitting(false)
+    } catch (error) {
+      // Error is handled in onError callback
     }
   }
 
@@ -48,17 +58,18 @@ export default function CommentForm({ postId }: CommentFormProps) {
         <textarea
           {...register('content')}
           rows={3}
-          className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-purple-600"
+          className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-purple-600 dark:bg-gray-800 dark:border-gray-700"
           placeholder="Write a comment..."
+          disabled={addComment.isPending}
         />
         {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content.message}</p>}
       </div>
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={addComment.isPending}
         className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50"
       >
-        {isSubmitting ? 'Posting...' : 'Post Comment'}
+        {addComment.isPending ? 'Posting...' : 'Post Comment'}
       </button>
     </form>
   )

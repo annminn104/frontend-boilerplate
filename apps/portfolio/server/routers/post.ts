@@ -295,4 +295,27 @@ export const postRouter = router({
 
     throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized to delete this comment' })
   }),
+
+  updateStatus: ownerProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        published: z.boolean(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const post = await ctx.prisma.post.update({
+        where: { id: input.id },
+        data: { published: input.published },
+        include: {
+          _count: {
+            select: {
+              comments: true,
+              likes: true,
+            },
+          },
+        },
+      })
+      return post
+    }),
 })

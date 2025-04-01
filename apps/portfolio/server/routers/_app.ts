@@ -5,6 +5,7 @@ import { contactRouter } from './contact'
 import { portfolioRouter } from './portfolio'
 import { projectRouter } from './project'
 import { commentRouter } from './comment'
+import { analyticsRouter } from './analytics'
 
 export const appRouter = router({
   post: postRouter,
@@ -13,6 +14,7 @@ export const appRouter = router({
   portfolio: portfolioRouter,
   project: projectRouter,
   comment: commentRouter,
+  analytics: analyticsRouter,
 })
 
 export type AppRouter = typeof appRouter

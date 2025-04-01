@@ -4,6 +4,7 @@ import { useAuth } from '@clerk/nextjs'
 import { motion } from 'framer-motion'
 import { trpc } from '@/lib/trpc'
 import { formatDistanceToNow } from 'date-fns'
+import { useRouter } from 'next/navigation'
 
 interface Comment {
   id: string
@@ -23,16 +24,28 @@ interface CommentListProps {
 export default function CommentList({ comments, postId }: CommentListProps) {
   const { userId } = useAuth()
   const utils = trpc.useContext()
+  const router = useRouter()
 
   const deleteComment = trpc.post.deleteComment.useMutation({
     onSuccess: () => {
+      // Invalidate both post detail and list views
       utils.post.getById.invalidate(postId)
+      utils.post.getAllPublished.invalidate()
+      router.refresh()
+    },
+    onError: error => {
+      console.error('Failed to delete comment:', error)
+      alert('Failed to delete comment. Please try again.')
     },
   })
 
   const handleDelete = async (commentId: string) => {
     if (confirm('Are you sure you want to delete this comment?')) {
-      await deleteComment.mutateAsync(commentId)
+      try {
+        await deleteComment.mutateAsync(commentId)
+      } catch (error) {
+        // Error is handled in onError callback
+      }
     }
   }
 
@@ -56,9 +69,10 @@ export default function CommentList({ comments, postId }: CommentListProps) {
             {userId === comment.author.id && (
               <button
                 onClick={() => handleDelete(comment.id)}
-                className="text-sm text-red-600 hover:text-red-700 transition-colors"
+                disabled={deleteComment.isPending}
+                className="text-sm text-red-600 hover:text-red-700 transition-colors disabled:opacity-50"
               >
-                Delete
+                {deleteComment.isPending ? 'Deleting...' : 'Delete'}
               </button>
             )}
           </div>
