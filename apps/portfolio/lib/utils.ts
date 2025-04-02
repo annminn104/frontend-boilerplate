@@ -6,7 +6,7 @@ import superjson from 'superjson'
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
-// [...]
+
 export const transformer = {
   input: superjson,
   output: {

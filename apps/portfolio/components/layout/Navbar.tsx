@@ -17,6 +17,9 @@ export default function Navbar() {
           </Link>
 
           <div className="flex items-center gap-6">
+            <Link href="/admin" className="hover:text-purple-600 transition-colors">
+              Dashboard
+            </Link>
             <Link href="/blog" className="hover:text-purple-600 transition-colors">
               Blog
             </Link>

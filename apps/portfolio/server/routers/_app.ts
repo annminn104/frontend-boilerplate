@@ -6,6 +6,16 @@ import { portfolioRouter } from './portfolio'
 import { projectRouter } from './project'
 import { commentRouter } from './comment'
 import { analyticsRouter } from './analytics'
+import { chatRouter } from './chat'
+import { createLikeRouter } from '../../interfaces/adapters/LikeTRPCAdapter'
+import { LikeUseCase } from '../../core/usecases/LikeUseCase'
+import { PrismaLikeRepository } from '../../interfaces/adapters/PrismaLikeRepository'
+import { PrismaCommentRepository } from '../../interfaces/adapters/PrismaCommentRepository'
+import { prisma } from '../db'
+
+const likeRepository = new PrismaLikeRepository(prisma)
+const commentRepository = new PrismaCommentRepository(prisma)
+const likeUseCase = new LikeUseCase(likeRepository, commentRepository)
 
 export const appRouter = router({
   post: postRouter,
@@ -15,6 +25,8 @@ export const appRouter = router({
   project: projectRouter,
   comment: commentRouter,
   analytics: analyticsRouter,
+  chat: chatRouter,
+  like: createLikeRouter(likeUseCase),
 })
 
 export type AppRouter = typeof appRouter

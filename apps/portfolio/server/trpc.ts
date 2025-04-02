@@ -1,63 +1,81 @@
 import { initTRPC, TRPCError } from '@trpc/server'
-import { type Context } from './context'
-import { ZodError } from 'zod'
-import { transformer } from '@/lib/utils'
+import { Context, AuthenticatedContext } from '../interfaces/types/Context'
+import { convertToTRPCError } from './errorAdapter'
+import superjson from 'superjson'
 
 const t = initTRPC.context<Context>().create({
-  transformer,
+  transformer: superjson,
   errorFormatter({ shape, error }) {
     return {
       ...shape,
       data: {
         ...shape.data,
-        zodError: error.cause instanceof ZodError ? error.cause.flatten() : null,
+        code: error.code,
       },
     }
   },
 })
 
-// Middleware to check if user is authenticated
-const isAuthed = t.middleware(({ next, ctx }) => {
-  if (!ctx.auth.userId) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' })
+export const router = t.router
+export const middleware = t.middleware
+
+// Base procedure with error handling
+const baseProcedure = t.procedure.use(
+  middleware(async ({ next }) => {
+    try {
+      return await next()
+    } catch (error) {
+      throw convertToTRPCError(error)
+    }
+  })
+)
+
+// Public procedure - available to all users
+export const publicProcedure = baseProcedure
+
+// Auth middleware - ensures user is authenticated
+const isAuthed = middleware(({ ctx, next }) => {
+  if (!ctx.userId) {
+    throw new TRPCError({ code: 'UNAUTHORIZED', message: 'You must be logged in' })
   }
   return next({
     ctx: {
-      auth: ctx.auth,
-    },
+      ...ctx,
+      userId: ctx.userId,
+    } as AuthenticatedContext,
   })
 })
 
-// Middleware to check if user has OWNER role
-const isOwner = t.middleware(async ({ next, ctx }) => {
-  if (!ctx.auth.userId) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' })
+// Protected procedure - only for authenticated users
+export const protectedProcedure = baseProcedure.use(isAuthed)
+
+// Owner middleware - ensures user is an owner
+const isOwner = middleware(async ({ ctx, next }) => {
+  if (!ctx.userId) {
+    throw new TRPCError({ code: 'UNAUTHORIZED', message: 'You must be logged in' })
   }
 
-  const owner = await ctx.prisma.user.findUnique({
+  const user = await ctx.prisma.user.findFirst({
     where: {
-      clerkId: ctx.auth.userId,
+      id: ctx.userId,
       role: 'OWNER',
     },
   })
 
-  // Check if current user is the first user (owner)
-  const currentUser = await ctx.prisma.user.findUnique({
-    where: { clerkId: ctx.auth.userId },
-  })
-
-  if (!currentUser || !owner || currentUser.id !== owner.id) {
-    throw new TRPCError({ code: 'FORBIDDEN', message: 'You must be an owner to perform this action' })
+  if (!user) {
+    throw new TRPCError({
+      code: 'FORBIDDEN',
+      message: 'You must be an owner to perform this action',
+    })
   }
 
   return next({
     ctx: {
-      auth: ctx.auth,
-    },
+      ...ctx,
+      userId: ctx.userId,
+    } as AuthenticatedContext,
   })
 })
 
-export const router = t.router
-export const publicProcedure = t.procedure
-export const protectedProcedure = t.procedure.use(isAuthed)
-export const ownerProcedure = t.procedure.use(isOwner)
+// Owner procedure - only for owner users
+export const ownerProcedure = baseProcedure.use(isOwner)

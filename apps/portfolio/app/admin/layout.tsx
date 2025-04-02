@@ -17,7 +17,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   ]
 
   return (
-    <div className="flex min-h-screen bg-muted/20">
+    <div className="flex min-h-[calc(100vh-64px)] bg-muted/20">
       {/* Desktop sidebar */}
       <aside className="hidden w-64 border-r bg-background p-6 md:block">
         <div className="flex flex-col space-y-6">
@@ -64,9 +64,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
       {/* Main content */}
       <div className="flex-1">
-        <header className="flex h-14 items-center gap-4 border-b bg-background px-6">
+        {/* <header className="flex h-14 items-center gap-4 border-b bg-background px-6">
           <h1 className="text-lg font-semibold">Admin Dashboard</h1>
-        </header>
+        </header> */}
         <main className="p-6">{children}</main>
       </div>
     </div>

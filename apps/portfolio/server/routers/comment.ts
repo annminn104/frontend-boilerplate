@@ -3,13 +3,144 @@ import { router, publicProcedure, protectedProcedure, ownerProcedure } from '../
 import { TRPCError } from '@trpc/server'
 import { observable } from '@trpc/server/observable'
 import { EventEmitter } from 'events'
-import { type Comment } from '@/types/comment'
+import {
+  type Comment,
+  type CommentAuthor,
+  type CommentPost,
+  type CommentCount,
+  type CommentLike,
+  type CommentReply,
+} from '@/types/comment'
+import { type Prisma } from '@prisma/client'
 
 // Create an event emitter for comment events
 const ee = new EventEmitter()
 
+type CommentInclude = {
+  author: {
+    select: {
+      id: true
+      name: true
+      email: true
+      clerkId: true
+      avatar: true
+    }
+  }
+  post: {
+    select: {
+      id: true
+      title: true
+    }
+  }
+  _count: {
+    select: {
+      likes: true
+      replies: true
+    }
+  }
+  likes: true
+}
+
+type ReplyInclude = CommentInclude & {
+  replies: {
+    include: CommentInclude
+  }
+}
+
+const replyInclude: CommentInclude = {
+  author: {
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      clerkId: true,
+      avatar: true,
+    },
+  },
+  post: {
+    select: {
+      id: true,
+      title: true,
+    },
+  },
+  _count: {
+    select: {
+      likes: true,
+      replies: true,
+    },
+  },
+  likes: true,
+} as const
+
+const commentInclude: ReplyInclude = {
+  author: {
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      clerkId: true,
+      avatar: true,
+    },
+  },
+  post: {
+    select: {
+      id: true,
+      title: true,
+    },
+  },
+  _count: {
+    select: {
+      likes: true,
+      replies: true,
+    },
+  },
+  replies: {
+    include: replyInclude,
+  },
+  likes: true,
+} as const
+
+type PrismaCommentWithIncludes = Prisma.CommentGetPayload<{
+  include: typeof commentInclude
+}>
+
+type PrismaReplyWithIncludes = Prisma.CommentGetPayload<{
+  include: typeof replyInclude
+}>
+
+// Helper function to format reply response
+const formatReplyResponse = (reply: PrismaReplyWithIncludes, userId?: string): CommentReply => ({
+  id: reply.id,
+  content: reply.content,
+  postId: reply.postId,
+  authorId: reply.authorId,
+  parentId: reply.parentId,
+  isSpam: reply.isSpam,
+  isReported: reply.isReported,
+  createdAt: reply.createdAt,
+  updatedAt: reply.updatedAt,
+  author: {
+    id: reply.author.id,
+    name: reply.author.name,
+    email: reply.author.email,
+    clerkId: reply.author.clerkId,
+    avatar: reply.author.avatar || `https://api.dicebear.com/7.x/avatars/svg?seed=${reply.author.email}`,
+  },
+  post: {
+    id: reply.post.id,
+    title: reply.post.title,
+  },
+  _count: {
+    likes: reply._count.likes,
+    replies: reply._count.replies,
+  },
+  likes: reply.likes,
+  isAuthor: userId ? reply.authorId === userId : false,
+  isLiked: userId ? reply.likes.some(like => like.userId === userId) : false,
+})
+
 // Helper function to format comment response
-const formatCommentResponse = (comment: any): Comment => ({
+const formatCommentResponse = (comment: PrismaCommentWithIncludes, userId?: string): Comment => ({
   id: comment.id,
   content: comment.content,
   postId: comment.postId,
@@ -21,54 +152,207 @@ const formatCommentResponse = (comment: any): Comment => ({
   updatedAt: comment.updatedAt,
   author: {
     id: comment.author.id,
-    name: comment.author.name || comment.author.email.split('@')[0],
+    name: comment.author.name,
     email: comment.author.email,
     clerkId: comment.author.clerkId,
+    avatar: comment.author.avatar || `https://api.dicebear.com/7.x/avatars/svg?seed=${comment.author.email}`,
   },
   post: {
     id: comment.post.id,
     title: comment.post.title,
   },
-  _count: comment._count,
-  parent: comment.parent,
-  replies: comment.replies,
+  _count: {
+    likes: comment._count.likes,
+    replies: comment._count.replies,
+  },
+  replies: comment.replies?.map(reply => formatReplyResponse(reply, userId)) || [],
+  isAuthor: userId ? comment.authorId === userId : false,
+  isLiked: userId ? comment.likes.some(like => like.userId === userId) : false,
+  likes: comment._count.likes,
 })
 
 export const commentRouter = router({
   // Get all comments for admin
   getAllForAdmin: ownerProcedure.query(async ({ ctx }): Promise<Comment[]> => {
-    const comments = await ctx.prisma.comment.findMany({
-      include: {
-        author: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            clerkId: true,
-          },
-        },
-        post: {
-          select: {
-            id: true,
-            title: true,
-          },
-        },
-        _count: {
-          select: {
-            likes: true,
-          },
-        },
-      },
+    const comments = (await ctx.prisma.comment.findMany({
+      include: commentInclude,
       orderBy: { createdAt: 'desc' },
+    })) as unknown as PrismaCommentWithIncludes[]
+
+    return comments.map(comment => formatCommentResponse(comment))
+  }),
+
+  // Get comments by post ID
+  getByPostId: publicProcedure
+    .input(
+      z.object({
+        postId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const comments = await ctx.prisma.comment.findMany({
+        where: {
+          postId: input.postId,
+          isSpam: false,
+          isReported: false,
+          parentId: null,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+        include: commentInclude,
+      })
+
+      return comments.map(comment =>
+        formatCommentResponse(
+          {
+            ...comment,
+            parentId: comment.parentId ?? null,
+          } as PrismaCommentWithIncludes,
+          ctx.auth?.userId ?? undefined
+        )
+      )
+    }),
+
+  // Create a new comment
+  create: protectedProcedure
+    .input(
+      z.object({
+        content: z.string().min(1),
+        postId: z.string(),
+        parentId: z.string().nullable(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const comment = await ctx.prisma.comment.create({
+        data: {
+          content: input.content,
+          postId: input.postId,
+          parentId: input.parentId ?? null,
+          authorId: ctx.auth.userId,
+        },
+        include: commentInclude,
+      })
+
+      const formattedComment = formatCommentResponse(
+        {
+          ...comment,
+          parentId: comment.parentId ?? null,
+        } as unknown as PrismaCommentWithIncludes,
+        ctx.auth.userId
+      )
+
+      ee.emit('newComment', formattedComment)
+      return formattedComment
+    }),
+
+  // Update a comment
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        content: z.string().min(1),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const comment = await ctx.prisma.comment.findUnique({
+        where: { id: input.id },
+        include: { author: true },
+      })
+
+      if (!comment) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' })
+      }
+
+      if (comment.author.clerkId !== ctx.auth.userId) {
+        throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized' })
+      }
+
+      const updatedComment = await ctx.prisma.comment.update({
+        where: { id: input.id },
+        data: { content: input.content },
+        include: commentInclude,
+      })
+
+      const formattedComment = formatCommentResponse(updatedComment, ctx.auth.userId)
+
+      ee.emit('commentUpdated', formattedComment)
+      return formattedComment
+    }),
+
+  // Delete a comment
+  delete: protectedProcedure.input(z.string()).mutation(async ({ ctx, input: id }) => {
+    const comment = await ctx.prisma.comment.findUnique({
+      where: { id },
+      include: { author: true },
     })
 
-    return comments.map(comment => ({
-      ...comment,
-      author: {
-        ...comment.author,
-        name: comment.author.name || comment.author.email.split('@')[0],
+    if (!comment) {
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' })
+    }
+
+    if (comment.author.clerkId !== ctx.auth.userId) {
+      throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized' })
+    }
+
+    await ctx.prisma.comment.delete({ where: { id } })
+    ee.emit('commentDeleted', id)
+    return { success: true }
+  }),
+
+  // Like a comment
+  likeComment: protectedProcedure.input(z.object({ id: z.string() })).mutation(async ({ ctx, input }) => {
+    const comment = await ctx.prisma.comment.findUnique({
+      where: { id: input.id },
+      select: { postId: true },
+    })
+
+    if (!comment) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Comment not found',
+      })
+    }
+
+    const like = await ctx.prisma.like.create({
+      data: {
+        userId: ctx.auth.userId,
+        commentId: input.id,
+        postId: comment.postId,
       },
-    }))
+      select: {
+        id: true,
+        userId: true,
+        commentId: true,
+        postId: true,
+        createdAt: true,
+      },
+    })
+
+    return like
+  }),
+
+  // Unlike a comment
+  unlikeComment: protectedProcedure.input(z.object({ id: z.string() })).mutation(async ({ ctx, input }) => {
+    const like = await ctx.prisma.like.findFirst({
+      where: {
+        commentId: input.id,
+        userId: ctx.auth.userId,
+      },
+    })
+
+    if (!like) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Like not found',
+      })
+    }
+
+    await ctx.prisma.like.delete({
+      where: { id: like.id },
+    })
+
+    return { success: true }
   }),
 
   // Get comment metrics for analytics
@@ -193,27 +477,7 @@ export const commentRouter = router({
     .mutation(async ({ ctx, input }): Promise<Comment> => {
       const comment = await ctx.prisma.comment.findUnique({
         where: { id: input.id },
-        include: {
-          author: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              clerkId: true,
-            },
-          },
-          post: {
-            select: {
-              id: true,
-              title: true,
-            },
-          },
-          _count: {
-            select: {
-              likes: true,
-            },
-          },
-        },
+        include: commentInclude,
       })
 
       if (!comment) {
@@ -226,39 +490,13 @@ export const commentRouter = router({
           isSpam: input.isSpam ?? comment.isSpam,
           isReported: input.isReported ?? comment.isReported,
         },
-        include: {
-          author: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              clerkId: true,
-            },
-          },
-          post: {
-            select: {
-              id: true,
-              title: true,
-            },
-          },
-          _count: {
-            select: {
-              likes: true,
-            },
-          },
-        },
+        include: commentInclude,
       })
 
       // Emit update event
-      ee.emit('commentUpdated', updatedComment)
+      ee.emit('commentUpdated', formatCommentResponse(updatedComment))
 
-      return {
-        ...updatedComment,
-        author: {
-          ...updatedComment.author,
-          name: updatedComment.author.name || updatedComment.author.email.split('@')[0],
-        },
-      }
+      return formatCommentResponse(updatedComment)
     }),
 
   // Bulk update comment status
@@ -282,32 +520,12 @@ export const commentRouter = router({
       // Get updated comments
       const updatedComments = await ctx.prisma.comment.findMany({
         where: { id: { in: input.ids } },
-        include: {
-          author: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              clerkId: true,
-            },
-          },
-          post: {
-            select: {
-              id: true,
-              title: true,
-            },
-          },
-          _count: {
-            select: {
-              likes: true,
-            },
-          },
-        },
+        include: commentInclude,
       })
 
       // Emit update events
       updatedComments.forEach(comment => {
-        ee.emit('commentUpdated', comment)
+        ee.emit('commentUpdated', formatCommentResponse(comment))
       })
 
       return result
@@ -344,27 +562,7 @@ export const commentRouter = router({
     .mutation(async ({ ctx, input }): Promise<Comment> => {
       const comment = await ctx.prisma.comment.findUnique({
         where: { id: input.id },
-        include: {
-          author: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              clerkId: true,
-            },
-          },
-          post: {
-            select: {
-              id: true,
-              title: true,
-            },
-          },
-          _count: {
-            select: {
-              likes: true,
-            },
-          },
-        },
+        include: commentInclude,
       })
 
       if (!comment) {
@@ -376,27 +574,7 @@ export const commentRouter = router({
         data: {
           content: input.content,
         },
-        include: {
-          author: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              clerkId: true,
-            },
-          },
-          post: {
-            select: {
-              id: true,
-              title: true,
-            },
-          },
-          _count: {
-            select: {
-              likes: true,
-            },
-          },
-        },
+        include: commentInclude,
       })
 
       const formattedComment = formatCommentResponse(updatedComment)
@@ -429,30 +607,10 @@ export const commentRouter = router({
           authorId: ctx.auth.userId,
           parentId: input.parentId,
         },
-        include: {
-          author: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              clerkId: true,
-            },
-          },
-          post: {
-            select: {
-              id: true,
-              title: true,
-            },
-          },
-          _count: {
-            select: {
-              likes: true,
-            },
-          },
-        },
+        include: commentInclude,
       })
 
-      const formattedComment = formatCommentResponse(newComment)
+      const formattedComment = formatCommentResponse(newComment, ctx.auth.userId)
       ee.emit('newComment', formattedComment)
       return formattedComment
     }),
