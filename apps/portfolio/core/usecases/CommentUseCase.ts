@@ -30,7 +30,7 @@ export class CommentUseCase {
       content: dto.content,
       postId: dto.postId,
       authorId: dto.authorId,
-      parentId: dto.parentId,
+      parentId: dto.parentId ?? null,
       isSpam: false,
       isReported: false,
     })
@@ -113,7 +113,7 @@ export class CommentUseCase {
       updatedAt: comment.updatedAt,
       author: {
         id: comment.author.id,
-        name: comment.author.name,
+        name: comment.author.name ?? 'Anonymous',
         email: comment.author.email,
         clerkId: comment.author.clerkId,
         avatar: comment.author.avatar,
@@ -146,7 +146,7 @@ export class CommentUseCase {
       updatedAt: reply.updatedAt,
       author: {
         id: reply.author.id,
-        name: reply.author.name,
+        name: reply.author.name ?? 'Anonymous',
         email: reply.author.email,
         clerkId: reply.author.clerkId,
         avatar: reply.author.avatar,

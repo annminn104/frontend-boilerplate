@@ -23,7 +23,7 @@ interface CommentListProps {
 
 export default function CommentList({ comments, postId }: CommentListProps) {
   const { userId } = useAuth()
-  const utils = trpc.useContext()
+  const utils = trpc.useUtils()
   const router = useRouter()
 
   const deleteComment = trpc.post.deleteComment.useMutation({

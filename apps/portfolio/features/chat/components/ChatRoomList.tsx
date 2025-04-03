@@ -9,7 +9,7 @@ import type { RoomListItem } from '../types/chat'
 export function ChatRoomList() {
   const router = useRouter()
   const [newRoomName, setNewRoomName] = useState('')
-  const utils = trpc.useContext()
+  const utils = trpc.useUtils()
 
   const { data: rooms = [], isLoading } = trpc.chat.getRooms.useQuery<RoomListItem[]>()
 

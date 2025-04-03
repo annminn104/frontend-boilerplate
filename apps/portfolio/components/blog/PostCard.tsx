@@ -16,7 +16,7 @@ interface PostCardProps {
 
 export default function PostCard({ post, isOwner }: PostCardProps) {
   const router = useRouter()
-  const utils = trpc.useContext()
+  const utils = trpc.useUtils()
 
   const deletePost = trpc.post.delete.useMutation({
     onSuccess: () => {

@@ -1,11 +1,11 @@
 import { CommentList } from '@/features/comments/components/CommentList'
 
-interface CommentsPageProps {
-  params: {
-    postId: string
-  }
+interface Props {
+  params: Promise<{ postId: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export default function CommentsPage({ params }: CommentsPageProps) {
-  return <CommentList postId={params.postId} />
+export default async function CommentsPage({ params }: Props) {
+  const { postId } = await params
+  return <CommentList postId={postId} />
 }

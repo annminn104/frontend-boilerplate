@@ -1,21 +1,20 @@
 'use client'
 
 import { useState } from 'react'
-import { type Comment } from '@/types/comment'
+import { type Comment } from '../types/comment'
 import { formatDistanceToNow } from 'date-fns'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, MessageCircle, Pencil, Trash2, X } from 'lucide-react'
+import { MessageCircle, Pencil, Trash2, X } from 'lucide-react'
+import { LikeButton } from '@/components/LikeButton'
 
 interface CommentItemProps {
   comment: Comment
   onReply: (content: string, parentId?: string) => Promise<void>
   onEdit: (commentId: string, content: string) => Promise<void>
   onDelete: (commentId: string) => Promise<void>
-  onLike: (commentId: string) => Promise<void>
-  onUnlike: (commentId: string) => Promise<void>
 }
 
-export function CommentItem({ comment, onReply, onEdit, onDelete, onLike, onUnlike }: CommentItemProps) {
+export function CommentItem({ comment, onReply, onEdit, onDelete }: CommentItemProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [isReplying, setIsReplying] = useState(false)
   const [editContent, setEditContent] = useState(comment.content)
@@ -41,14 +40,6 @@ export function CommentItem({ comment, onReply, onEdit, onDelete, onLike, onUnli
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this comment?')) {
       await onDelete(comment.id)
-    }
-  }
-
-  const handleLikeToggle = async () => {
-    if (comment.isLiked) {
-      await onUnlike(comment.id)
-    } else {
-      await onLike(comment.id)
     }
   }
 
@@ -85,7 +76,7 @@ export function CommentItem({ comment, onReply, onEdit, onDelete, onLike, onUnli
         )}
       </div>
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {isEditing ? (
           <motion.form
             initial={{ opacity: 0 }}
@@ -124,16 +115,8 @@ export function CommentItem({ comment, onReply, onEdit, onDelete, onLike, onUnli
         )}
       </AnimatePresence>
 
-      <div className="mt-4 flex items-center gap-4">
-        <button
-          onClick={handleLikeToggle}
-          className={`flex items-center gap-1 rounded-full px-3 py-1 text-sm ${
-            comment.isLiked ? 'bg-red-50 text-red-500' : 'text-gray-500 hover:bg-gray-100'
-          }`}
-        >
-          <Heart size={16} className={comment.isLiked ? 'fill-current' : ''} />
-          {comment.likes}
-        </button>
+      <div className="mt-4 flex items-center gap-2">
+        <LikeButton commentId={comment.id} initialLikeCount={comment._count.likes} initialIsLiked={comment.isLiked} />
         <button
           onClick={() => setIsReplying(!isReplying)}
           className="flex items-center gap-1 rounded-full px-3 py-1 text-sm text-gray-500 hover:bg-gray-100"
@@ -185,12 +168,10 @@ export function CommentItem({ comment, onReply, onEdit, onDelete, onLike, onUnli
           {comment.replies.map(reply => (
             <CommentItem
               key={reply.id}
-              comment={reply}
+              comment={reply as unknown as Comment}
               onReply={onReply}
               onEdit={onEdit}
               onDelete={onDelete}
-              onLike={onLike}
-              onUnlike={onUnlike}
             />
           ))}
         </div>

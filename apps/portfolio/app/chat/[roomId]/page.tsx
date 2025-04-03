@@ -1,11 +1,11 @@
 import { ChatRoom } from '@/features/chat/components/ChatRoom'
 
-interface ChatRoomPageProps {
-  params: {
-    roomId: string
-  }
+interface Props {
+  params: Promise<{ roomId: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export default function ChatRoomPage({ params }: ChatRoomPageProps) {
-  return <ChatRoom roomId={params.roomId} />
+export default async function ChatRoomPage({ params }: Props) {
+  const { roomId } = await params
+  return <ChatRoom roomId={roomId} />
 }

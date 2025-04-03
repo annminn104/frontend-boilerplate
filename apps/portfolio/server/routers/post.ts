@@ -214,7 +214,7 @@ export const postRouter = router({
       where: {
         postId_userId: {
           postId,
-          userId: ctx.auth.userId,
+          userId: ctx.auth.userId ?? '',
         },
       },
     })
@@ -279,12 +279,12 @@ export const postRouter = router({
 
     // Otherwise, check if user is an OWNER
     const user = await ctx.prisma.user.findUnique({
-      where: { clerkId: ctx.auth.userId },
+      where: { clerkId: ctx.auth.userId ?? '' },
     })
 
     // Check if user is an OWNER
     const isOwner = await ctx.prisma.user.findUnique({
-      where: { clerkId: ctx.auth.userId, role: 'OWNER' },
+      where: { clerkId: ctx.auth.userId ?? '', role: 'OWNER' },
     })
 
     if (user && isOwner && user.id === isOwner.id) {

@@ -23,7 +23,7 @@ export default function ProjectsAdminPage() {
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
   const [deletingId, setDeletingId] = useState<string | null>(null)
 
-  const utils = trpc.useContext()
+  const utils = trpc.useUtils()
 
   const { data: projects, isLoading } = trpc.project.getAll.useQuery()
 

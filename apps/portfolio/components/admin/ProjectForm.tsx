@@ -32,7 +32,7 @@ interface ProjectFormProps {
 export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [tagInput, setTagInput] = useState('')
-  const utils = trpc.useContext()
+  const utils = trpc.useUtils()
 
   const {
     register,

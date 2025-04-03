@@ -95,7 +95,7 @@ export const chatRouter = router({
         name: input.name,
         participants: {
           create: {
-            userId: ctx.auth.userId,
+            userId: ctx.auth.userId ?? '',
           },
         },
       },
@@ -110,7 +110,7 @@ export const chatRouter = router({
     const participant = await prisma.participant.create({
       data: {
         roomId: input.roomId,
-        userId: ctx.auth.userId,
+        userId: ctx.auth.userId ?? '',
       },
       include: {
         user: {
@@ -136,7 +136,7 @@ export const chatRouter = router({
       where: {
         roomId_userId: {
           roomId: input.roomId,
-          userId: ctx.auth.userId,
+          userId: ctx.auth.userId ?? '',
         },
       },
     })
@@ -162,7 +162,7 @@ export const chatRouter = router({
         data: {
           content: input.content,
           roomId: input.roomId,
-          userId: ctx.auth.userId,
+          userId: ctx.auth.userId ?? '',
         },
         include: {
           user: {
@@ -193,7 +193,7 @@ export const chatRouter = router({
       where: {
         roomId_userId: {
           roomId: input.roomId,
-          userId: ctx.auth.userId,
+          userId: ctx.auth.userId ?? '',
         },
       },
       data: {

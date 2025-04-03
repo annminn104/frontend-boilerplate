@@ -97,7 +97,7 @@ export default function PostsAdminPage() {
   const [isBulkPublishing, setIsBulkPublishing] = useState(false)
   const [bulkPublishAction, setBulkPublishAction] = useState<'publish' | 'unpublish'>('publish')
 
-  const utils = trpc.useContext()
+  const utils = trpc.useUtils()
 
   const { data: posts, isLoading } = trpc.post.getAllForAdmin.useQuery(undefined, {
     refetchOnWindowFocus: false,

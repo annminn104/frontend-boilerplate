@@ -13,7 +13,7 @@ interface CommentFormProps {
 
 export default function CommentForm({ postId }: CommentFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const utils = trpc.useContext()
+  const utils = trpc.useUtils()
   const router = useRouter()
 
   const {

@@ -4,7 +4,7 @@ import type { Room, RoomEvent, Participant } from '../types/chat'
 
 export function useChatRoom(roomId: string) {
   const [room, setRoom] = useState<Room | null>(null)
-  const utils = trpc.useContext()
+  const utils = trpc.useUtils()
 
   const { data: roomData, isLoading } = trpc.chat.getRoom.useQuery({ roomId }, { enabled: !!roomId })
 

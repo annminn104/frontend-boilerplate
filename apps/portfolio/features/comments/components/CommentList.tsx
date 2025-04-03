@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useComments } from '../hooks/useComments'
 import { CommentItem } from './CommentItem'
+import type { Comment } from '../types/comment'
 
 interface CommentListProps {
   postId: string
@@ -10,8 +11,7 @@ interface CommentListProps {
 
 export function CommentList({ postId }: CommentListProps) {
   const [newComment, setNewComment] = useState('')
-  const { comments, isLoading, createComment, updateComment, deleteComment, likeComment, unlikeComment } =
-    useComments(postId)
+  const { comments, isLoading, createComment, updateComment, deleteComment } = useComments(postId)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -56,12 +56,10 @@ export function CommentList({ postId }: CommentListProps) {
         {comments.map(comment => (
           <CommentItem
             key={comment.id}
-            comment={comment}
+            comment={comment as unknown as Comment}
             onReply={createComment}
             onEdit={updateComment}
             onDelete={deleteComment}
-            onLike={likeComment}
-            onUnlike={unlikeComment}
           />
         ))}
 

@@ -19,7 +19,7 @@ export default function PostDetail({ post, isOwner }: PostDetailProps) {
   const router = useRouter()
   const { isSignedIn } = useAuth()
   const [isEditOpen, setIsEditOpen] = useState(false)
-  const utils = trpc.useContext()
+  const utils = trpc.useUtils()
 
   const deletePost = trpc.post.delete.useMutation({
     onSuccess: () => {

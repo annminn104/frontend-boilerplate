@@ -13,7 +13,7 @@ interface PostFormProps {
 
 export function PostForm({ post, onSuccess }: PostFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const utils = trpc.useContext()
+  const utils = trpc.useUtils()
 
   const {
     register,

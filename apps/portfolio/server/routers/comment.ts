@@ -3,14 +3,7 @@ import { router, publicProcedure, protectedProcedure, ownerProcedure } from '../
 import { TRPCError } from '@trpc/server'
 import { observable } from '@trpc/server/observable'
 import { EventEmitter } from 'events'
-import {
-  type Comment,
-  type CommentAuthor,
-  type CommentPost,
-  type CommentCount,
-  type CommentLike,
-  type CommentReply,
-} from '@/types/comment'
+import { type Comment, type CommentReply } from '@/types/comment'
 import { type Prisma } from '@prisma/client'
 
 // Create an event emitter for comment events
@@ -229,7 +222,7 @@ export const commentRouter = router({
           content: input.content,
           postId: input.postId,
           parentId: input.parentId ?? null,
-          authorId: ctx.auth.userId,
+          authorId: ctx.auth.userId ?? '',
         },
         include: commentInclude,
       })
@@ -239,7 +232,7 @@ export const commentRouter = router({
           ...comment,
           parentId: comment.parentId ?? null,
         } as unknown as PrismaCommentWithIncludes,
-        ctx.auth.userId
+        ctx.auth.userId ?? undefined
       )
 
       ee.emit('newComment', formattedComment)
@@ -316,7 +309,7 @@ export const commentRouter = router({
 
     const like = await ctx.prisma.like.create({
       data: {
-        userId: ctx.auth.userId,
+        userId: ctx.auth.userId ?? '',
         commentId: input.id,
         postId: comment.postId,
       },
@@ -337,7 +330,7 @@ export const commentRouter = router({
     const like = await ctx.prisma.like.findFirst({
       where: {
         commentId: input.id,
-        userId: ctx.auth.userId,
+        userId: ctx.auth.userId ?? '',
       },
     })
 
@@ -604,13 +597,13 @@ export const commentRouter = router({
         data: {
           content: input.content,
           postId: input.postId,
-          authorId: ctx.auth.userId,
+          authorId: ctx.auth.userId ?? '',
           parentId: input.parentId,
         },
         include: commentInclude,
       })
 
-      const formattedComment = formatCommentResponse(newComment, ctx.auth.userId)
+      const formattedComment = formatCommentResponse(newComment, ctx.auth.userId ?? undefined)
       ee.emit('newComment', formattedComment)
       return formattedComment
     }),

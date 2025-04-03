@@ -4,7 +4,7 @@ import type { Message, RoomEvent } from '../types/chat'
 
 export function useChatMessages(roomId: string) {
   const [messages, setMessages] = useState<Message[]>([])
-  const utils = trpc.useContext()
+  const utils = trpc.useUtils()
 
   const { mutateAsync: sendMessage } = trpc.chat.sendMessage.useMutation({
     onSuccess: () => {

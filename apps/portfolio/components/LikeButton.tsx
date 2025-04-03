@@ -1,6 +1,6 @@
 import { HeartIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid'
-import { useLike } from '../hooks/useLike'
+import { useLike } from '@/hooks/useLike'
 import clsx from 'clsx'
 
 interface LikeButtonProps {

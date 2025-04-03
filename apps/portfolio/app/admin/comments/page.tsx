@@ -84,7 +84,7 @@ export default function CommentsAdminPage() {
   const [replyToComment, setReplyToComment] = useState<Comment | null>(null)
   const [replyContent, setReplyContent] = useState('')
 
-  const utils = trpc.useContext()
+  const utils = trpc.useUtils()
 
   const { data: comments, isLoading } = trpc.comment.getAllForAdmin.useQuery(undefined, {
     refetchOnWindowFocus: false,

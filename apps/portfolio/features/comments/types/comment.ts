@@ -2,8 +2,39 @@ export interface Author {
   id: string
   name: string | null
   email: string
-  clerkId: string
-  avatar: string
+  avatar: string | null
+}
+
+export interface CommentLike {
+  id: string
+  userId: string
+  commentId: string | null
+  postId: string | null
+  createdAt: Date
+}
+
+export interface CommentReply {
+  id: string
+  content: string
+  postId: string
+  authorId: string
+  parentId: string | null
+  isSpam: boolean
+  isReported: boolean
+  createdAt: Date
+  updatedAt: Date
+  author: Author
+  post: {
+    id: string
+    title: string
+  }
+  _count: {
+    likes: number
+    replies: number
+  }
+  likes: CommentLike[]
+  isAuthor: boolean
+  isLiked: boolean
 }
 
 export interface Comment {
@@ -11,25 +42,25 @@ export interface Comment {
   content: string
   postId: string
   authorId: string
-  parentId?: string | null
+  parentId: string | null
   isSpam: boolean
   isReported: boolean
-  createdAt: string
-  updatedAt: string
+  createdAt: Date
+  updatedAt: Date
   author: Author
   post: {
     id: string
     title: string
   }
-  _count?: {
+  _count: {
     likes: number
     replies: number
   }
   parent?: Comment | null
-  replies?: Comment[]
+  replies: CommentReply[]
+  likes: CommentLike[]
   isAuthor: boolean
   isLiked: boolean
-  likes: number
 }
 
 export interface CommentMetrics {
