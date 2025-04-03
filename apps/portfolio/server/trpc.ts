@@ -41,7 +41,7 @@ const isAuthed = middleware(({ ctx, next }) => {
   return next({
     ctx: {
       ...ctx,
-      userId: ctx.userId,
+      userId: ctx.auth.userId || ctx.userId,
     } as AuthenticatedContext,
   })
 })
@@ -51,13 +51,13 @@ export const protectedProcedure = baseProcedure.use(isAuthed)
 
 // Owner middleware - ensures user is an owner
 const isOwner = middleware(async ({ ctx, next }) => {
-  if (!ctx.userId) {
+  if (!ctx.userId || !ctx.auth.userId) {
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'You must be logged in' })
   }
 
-  const user = await ctx.prisma.user.findFirst({
+  const user = await ctx.prisma.user.findUnique({
     where: {
-      id: ctx.userId,
+      id: ctx.auth.userId || ctx.userId,
       role: 'OWNER',
     },
   })
@@ -72,7 +72,7 @@ const isOwner = middleware(async ({ ctx, next }) => {
   return next({
     ctx: {
       ...ctx,
-      userId: ctx.userId,
+      userId: ctx.auth.userId || ctx.userId,
     } as AuthenticatedContext,
   })
 })
