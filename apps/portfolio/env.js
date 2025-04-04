@@ -4,11 +4,11 @@ import { z } from 'zod'
 export const env = createEnv({
   server: {
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
-    WS_PORT: z.string().default('3001'),
+    WS_PORT: z.string().default('3000'),
   },
   client: {
-    NEXT_PUBLIC_WS_HOST: z.string().default('localhost'),
-    NEXT_PUBLIC_WS_PORT: z.string().default('3001'),
+    NEXT_PUBLIC_WS_HOST: z.string().default('ws://localhost'),
+    NEXT_PUBLIC_WS_PORT: z.string().default('3000'),
   },
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,

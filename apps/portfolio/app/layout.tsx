@@ -6,6 +6,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { TRPCProvider } from '@/providers/trpc'
 import Navbar from '@/components/layout/Navbar'
 import { ThemeProvider } from '@/providers/theme'
+import { cookies } from 'next/headers'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -38,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClerkProvider>
-          <TRPCProvider>
+          <TRPCProvider cookies={cookies().toString()}>
             <ThemeProvider>
               <Navbar />
               <div className="pt-16">{children}</div>
