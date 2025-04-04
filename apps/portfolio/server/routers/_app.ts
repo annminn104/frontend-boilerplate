@@ -11,8 +11,8 @@ import { createLikeRouter } from '../../interfaces/adapters/LikeTRPCAdapter'
 import { LikeUseCase } from '../../core/usecases/LikeUseCase'
 import { PrismaLikeRepository } from '../../interfaces/adapters/PrismaLikeRepository'
 import { PrismaCommentRepository } from '../../interfaces/adapters/PrismaCommentRepository'
-import { prisma } from '../db'
 import { likeRouter } from './like'
+import { prisma } from '@/lib/prisma'
 
 const likeRepository = new PrismaLikeRepository(prisma)
 const commentRepository = new PrismaCommentRepository(prisma)

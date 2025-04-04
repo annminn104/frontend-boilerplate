@@ -3,14 +3,14 @@ import { TRPCError } from '@trpc/server'
 import { observable } from '@trpc/server/observable'
 import { EventEmitter } from 'events'
 import { protectedProcedure, router } from '../trpc'
-import { prisma } from '@/lib/prisma'
 
 // Event emitter for real-time updates
 const ee = new EventEmitter()
 
 export const chatRouter = router({
   // Get all rooms
-  getRooms: protectedProcedure.query(async () => {
+  getRooms: protectedProcedure.query(async ({ ctx }) => {
+    const { prisma } = ctx
     const rooms = await prisma.room.findMany({
       include: {
         _count: {
@@ -48,6 +48,7 @@ export const chatRouter = router({
 
   // Get a single room with messages
   getRoom: protectedProcedure.input(z.object({ roomId: z.string() })).query(async ({ input, ctx }) => {
+    const { prisma } = ctx
     const room = await prisma.room.findUnique({
       where: { id: input.roomId },
       include: {
@@ -90,12 +91,13 @@ export const chatRouter = router({
 
   // Create a new room
   createRoom: protectedProcedure.input(z.object({ name: z.string().min(1) })).mutation(async ({ input, ctx }) => {
+    const { prisma, auth } = ctx
     const room = await prisma.room.create({
       data: {
         name: input.name,
         participants: {
           create: {
-            userId: ctx.auth.userId ?? '',
+            userId: auth.userId!,
           },
         },
       },
@@ -107,10 +109,11 @@ export const chatRouter = router({
 
   // Join a room
   joinRoom: protectedProcedure.input(z.object({ roomId: z.string() })).mutation(async ({ input, ctx }) => {
+    const { prisma, auth } = ctx
     const participant = await prisma.participant.create({
       data: {
         roomId: input.roomId,
-        userId: ctx.auth.userId ?? '',
+        userId: auth.userId!,
       },
       include: {
         user: {
@@ -132,11 +135,12 @@ export const chatRouter = router({
 
   // Leave a room
   leaveRoom: protectedProcedure.input(z.object({ roomId: z.string() })).mutation(async ({ input, ctx }) => {
+    const { prisma, auth } = ctx
     const participant = await prisma.participant.delete({
       where: {
         roomId_userId: {
           roomId: input.roomId,
-          userId: ctx.auth.userId ?? '',
+          userId: auth.userId!,
         },
       },
     })
@@ -158,11 +162,12 @@ export const chatRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      const { prisma, auth } = ctx
       const message = await prisma.message.create({
         data: {
           content: input.content,
           roomId: input.roomId,
-          userId: ctx.auth.userId ?? '',
+          userId: auth.userId!,
         },
         include: {
           user: {
@@ -189,11 +194,12 @@ export const chatRouter = router({
 
   // Mark room as read
   markAsRead: protectedProcedure.input(z.object({ roomId: z.string() })).mutation(async ({ input, ctx }) => {
+    const { prisma, auth } = ctx
     return prisma.participant.update({
       where: {
         roomId_userId: {
           roomId: input.roomId,
-          userId: ctx.auth.userId ?? '',
+          userId: auth.userId!,
         },
       },
       data: {

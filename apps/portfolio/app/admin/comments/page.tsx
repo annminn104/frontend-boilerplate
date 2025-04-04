@@ -50,7 +50,6 @@ import { SearchAndFilter } from '@/components/admin/SearchAndFilter'
 import { Pagination } from '@/components/admin/Pagination'
 import { DateRangePicker } from '@/components/admin/DateRangePicker'
 import type { Comment } from '@/types/comment'
-import { env } from '@/env.mjs'
 import type { DateRange } from 'react-day-picker'
 
 type SortField = 'content' | 'author' | 'post' | 'createdAt' | 'likes'

@@ -3,8 +3,9 @@ import { TRPCError } from '@trpc/server'
 
 export const userRouter = router({
   getCurrent: protectedProcedure.query(async ({ ctx }) => {
-    const user = await ctx.prisma.user.findUnique({
-      where: { clerkId: ctx.auth.userId ?? '' },
+    const { prisma, auth } = ctx
+    const user = await prisma.user.findUnique({
+      where: { clerkId: auth.userId! },
     })
 
     if (!user) {

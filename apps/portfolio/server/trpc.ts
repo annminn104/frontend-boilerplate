@@ -2,6 +2,7 @@ import { initTRPC, TRPCError } from '@trpc/server'
 import { Context, AuthenticatedContext } from '../interfaces/types/Context'
 import { convertToTRPCError } from './errorAdapter'
 import superjson from 'superjson'
+import { ZodError } from 'zod'
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
@@ -11,6 +12,7 @@ const t = initTRPC.context<Context>().create({
       data: {
         ...shape.data,
         code: error.code,
+        zodError: error.cause instanceof ZodError ? error.cause.flatten() : null,
       },
     }
   },
@@ -35,13 +37,13 @@ export const publicProcedure = baseProcedure
 
 // Auth middleware - ensures user is authenticated
 const isAuthed = middleware(({ ctx, next }) => {
-  if (!ctx.userId) {
+  if (!ctx.auth.userId) {
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'You must be logged in' })
   }
   return next({
     ctx: {
       ...ctx,
-      userId: ctx.auth.userId || ctx.userId,
+      auth: ctx.auth,
     } as AuthenticatedContext,
   })
 })
@@ -51,13 +53,13 @@ export const protectedProcedure = baseProcedure.use(isAuthed)
 
 // Owner middleware - ensures user is an owner
 const isOwner = middleware(async ({ ctx, next }) => {
-  if (!ctx.userId || !ctx.auth.userId) {
+  if (!ctx.auth.userId) {
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'You must be logged in' })
   }
 
   const user = await ctx.prisma.user.findUnique({
     where: {
-      id: ctx.auth.userId || ctx.userId,
+      id: ctx.auth.userId,
       role: 'OWNER',
     },
   })
@@ -72,7 +74,7 @@ const isOwner = middleware(async ({ ctx, next }) => {
   return next({
     ctx: {
       ...ctx,
-      userId: ctx.auth.userId || ctx.userId,
+      userId: ctx.auth.userId,
     } as AuthenticatedContext,
   })
 })

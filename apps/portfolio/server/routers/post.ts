@@ -7,7 +7,8 @@ import { Post } from '@/types/blog'
 export const postRouter = router({
   // Get all published posts
   getAllPublished: publicProcedure.query(async ({ ctx }) => {
-    const posts = await ctx.prisma.post.findMany({
+    const { prisma } = ctx
+    const posts = await prisma.post.findMany({
       where: { published: true },
       include: {
         author: {
@@ -60,7 +61,8 @@ export const postRouter = router({
 
   // Get all posts for admin (including drafts)
   getAllForAdmin: ownerProcedure.query(async ({ ctx }) => {
-    const posts = await ctx.prisma.post.findMany({
+    const { prisma } = ctx
+    const posts = await prisma.post.findMany({
       include: {
         author: {
           select: {
@@ -81,7 +83,8 @@ export const postRouter = router({
 
   // Get a single post by ID
   getById: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
-    const post = await ctx.prisma.post.findUnique({
+    const { prisma } = ctx
+    const post = await prisma.post.findUnique({
       where: { id: input },
       include: {
         author: {
@@ -113,15 +116,16 @@ export const postRouter = router({
 
   // Create a new post (protected)
   create: ownerProcedure.input(postSchema).mutation(async ({ ctx, input }) => {
-    const userId = ctx.auth.userId
+    const { prisma, auth } = ctx
+    const userId = auth.userId
     if (!userId) throw new TRPCError({ code: 'UNAUTHORIZED' })
 
-    const user = await ctx.prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { clerkId: userId },
     })
     if (!user) throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' })
 
-    return ctx.prisma.post.create({
+    return prisma.post.create({
       data: {
         ...input,
         authorId: user.id,
@@ -138,7 +142,8 @@ export const postRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const post = await ctx.prisma.post.findUnique({
+      const { prisma } = ctx
+      const post = await prisma.post.findUnique({
         where: { id: input.id },
         include: { author: true },
       })
@@ -147,15 +152,13 @@ export const postRouter = router({
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
       }
 
-      return ctx.prisma.post.update({
-        where: { id: input.id },
-        data: input.data,
-      })
+      return prisma.post.update({ where: { id: input.id }, data: input.data })
     }),
 
   // Delete a post (protected)
   delete: ownerProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
-    const post = await ctx.prisma.post.findUnique({
+    const { prisma } = ctx
+    const post = await prisma.post.findUnique({
       where: { id: input },
     })
 
@@ -163,22 +166,20 @@ export const postRouter = router({
       throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
     }
 
-    return ctx.prisma.post.delete({
-      where: { id: input },
-    })
+    return prisma.post.delete({ where: { id: input } })
   }),
 
   // Like a post (protected)
   toggleLike: protectedProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
-    const userId = ctx.auth.userId
-    if (!userId) throw new TRPCError({ code: 'UNAUTHORIZED' })
+    const { prisma, auth } = ctx
+    if (!auth.userId) throw new TRPCError({ code: 'UNAUTHORIZED' })
 
-    const user = await ctx.prisma.user.findUnique({
-      where: { clerkId: userId },
+    const user = await prisma.user.findUnique({
+      where: { clerkId: auth.userId },
     })
     if (!user) throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' })
 
-    const existingLike = await ctx.prisma.like.findUnique({
+    const existingLike = await prisma.like.findUnique({
       where: {
         postId_userId: {
           postId: input,
@@ -188,12 +189,10 @@ export const postRouter = router({
     })
 
     if (existingLike) {
-      return ctx.prisma.like.delete({
-        where: { id: existingLike.id },
-      })
+      return prisma.like.delete({ where: { id: existingLike.id } })
     }
 
-    return ctx.prisma.like.create({
+    return prisma.like.create({
       data: {
         postId: input,
         userId: user.id,
@@ -203,18 +202,20 @@ export const postRouter = router({
 
   // Get likes count for a post
   getLikesCount: publicProcedure.input(z.string()).query(async ({ ctx, input: postId }) => {
-    return await ctx.prisma.like.count({
+    const { prisma } = ctx
+    return await prisma.like.count({
       where: { postId },
     })
   }),
 
   // Check if user has liked a post
   hasLiked: protectedProcedure.input(z.string()).query(async ({ ctx, input: postId }) => {
-    const like = await ctx.prisma.like.findUnique({
+    const { prisma, auth } = ctx
+    const like = await prisma.like.findUnique({
       where: {
         postId_userId: {
           postId,
-          userId: ctx.auth.userId ?? '',
+          userId: auth.userId!,
         },
       },
     })
@@ -223,7 +224,8 @@ export const postRouter = router({
 
   // Get all comments for a post
   getComments: publicProcedure.input(z.string()).query(async ({ ctx, input: postId }) => {
-    return await ctx.prisma.comment.findMany({
+    const { prisma } = ctx
+    return await prisma.comment.findMany({
       where: { postId },
       include: {
         author: true,
@@ -242,15 +244,15 @@ export const postRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const userId = ctx.auth.userId
-      if (!userId) throw new TRPCError({ code: 'UNAUTHORIZED' })
+      const { prisma, auth } = ctx
+      if (!auth.userId) throw new TRPCError({ code: 'UNAUTHORIZED' })
 
-      const user = await ctx.prisma.user.findUnique({
-        where: { clerkId: userId },
+      const user = await prisma.user.findUnique({
+        where: { clerkId: auth.userId },
       })
       if (!user) throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' })
 
-      return ctx.prisma.comment.create({
+      return prisma.comment.create({
         data: {
           content: input.content,
           postId: input.postId,
@@ -261,7 +263,8 @@ export const postRouter = router({
 
   // Delete a comment (protected, owner or post author only)
   deleteComment: protectedProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
-    const comment = await ctx.prisma.comment.findUnique({
+    const { prisma, auth } = ctx
+    const comment = await prisma.comment.findUnique({
       where: { id: input },
       include: { author: true },
     })
@@ -271,24 +274,24 @@ export const postRouter = router({
     }
 
     // Allow deletion if user is the comment author
-    if (comment.author.clerkId === ctx.auth.userId) {
-      return ctx.prisma.comment.delete({
+    if (comment.author.clerkId === auth.userId) {
+      return prisma.comment.delete({
         where: { id: input },
       })
     }
 
     // Otherwise, check if user is an OWNER
-    const user = await ctx.prisma.user.findUnique({
-      where: { clerkId: ctx.auth.userId ?? '' },
+    const user = await prisma.user.findUnique({
+      where: { clerkId: auth.userId! },
     })
 
     // Check if user is an OWNER
-    const isOwner = await ctx.prisma.user.findUnique({
-      where: { clerkId: ctx.auth.userId ?? '', role: 'OWNER' },
+    const isOwner = await prisma.user.findUnique({
+      where: { clerkId: auth.userId!, role: 'OWNER' },
     })
 
     if (user && isOwner && user.id === isOwner.id) {
-      return ctx.prisma.comment.delete({
+      return prisma.comment.delete({
         where: { id: input },
       })
     }
@@ -304,7 +307,8 @@ export const postRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const post = await ctx.prisma.post.update({
+      const { prisma } = ctx
+      const post = await prisma.post.update({
         where: { id: input.id },
         data: { published: input.published },
         include: {

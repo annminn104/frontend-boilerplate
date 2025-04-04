@@ -11,11 +11,11 @@ type LikeCommentInput = z.infer<typeof LikeCommentSchema>
 export const createLikeRouter = (likeUseCase: LikeUseCase) => {
   return router({
     like: protectedProcedure.input(LikeCommentSchema).mutation(async ({ input, ctx }) => {
-      return likeUseCase.likeComment(input.commentId, ctx.userId!)
+      return likeUseCase.likeComment(input.commentId, ctx.auth.userId!)
     }),
 
     unlike: protectedProcedure.input(LikeCommentSchema).mutation(async ({ input, ctx }) => {
-      return likeUseCase.unlikeComment(input.commentId, ctx.userId!)
+      return likeUseCase.unlikeComment(input.commentId, ctx.auth.userId!)
     }),
 
     getLikeCount: protectedProcedure.input(LikeCommentSchema).query(async ({ input }) => {
@@ -23,7 +23,7 @@ export const createLikeRouter = (likeUseCase: LikeUseCase) => {
     }),
 
     isLiked: protectedProcedure.input(LikeCommentSchema).query(async ({ input, ctx }) => {
-      return likeUseCase.isLikedByUser(input.commentId, ctx.userId!)
+      return likeUseCase.isLikedByUser(input.commentId, ctx.auth.userId!)
     }),
   })
 }

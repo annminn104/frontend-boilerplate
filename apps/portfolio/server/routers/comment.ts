@@ -167,7 +167,8 @@ const formatCommentResponse = (comment: PrismaCommentWithIncludes, userId?: stri
 export const commentRouter = router({
   // Get all comments for admin
   getAllForAdmin: ownerProcedure.query(async ({ ctx }): Promise<Comment[]> => {
-    const comments = (await ctx.prisma.comment.findMany({
+    const { prisma } = ctx
+    const comments = (await prisma.comment.findMany({
       include: commentInclude,
       orderBy: { createdAt: 'desc' },
     })) as unknown as PrismaCommentWithIncludes[]
@@ -183,7 +184,8 @@ export const commentRouter = router({
       })
     )
     .query(async ({ ctx, input }) => {
-      const comments = await ctx.prisma.comment.findMany({
+      const { prisma, auth } = ctx
+      const comments = await prisma.comment.findMany({
         where: {
           postId: input.postId,
           isSpam: false,
@@ -202,7 +204,7 @@ export const commentRouter = router({
             ...comment,
             parentId: comment.parentId ?? null,
           } as PrismaCommentWithIncludes,
-          ctx.auth?.userId ?? undefined
+          auth.userId!
         )
       )
     }),
@@ -217,12 +219,13 @@ export const commentRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const comment = await ctx.prisma.comment.create({
+      const { prisma, auth } = ctx
+      const comment = await prisma.comment.create({
         data: {
           content: input.content,
           postId: input.postId,
           parentId: input.parentId ?? null,
-          authorId: ctx.auth.userId ?? '',
+          authorId: auth.userId!,
         },
         include: commentInclude,
       })
@@ -232,7 +235,7 @@ export const commentRouter = router({
           ...comment,
           parentId: comment.parentId ?? null,
         } as unknown as PrismaCommentWithIncludes,
-        ctx.auth.userId ?? undefined
+        auth.userId!
       )
 
       ee.emit('newComment', formattedComment)
@@ -248,7 +251,8 @@ export const commentRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const comment = await ctx.prisma.comment.findUnique({
+      const { prisma, auth } = ctx
+      const comment = await prisma.comment.findUnique({
         where: { id: input.id },
         include: { author: true },
       })
@@ -257,17 +261,17 @@ export const commentRouter = router({
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' })
       }
 
-      if (comment.author.clerkId !== ctx.auth.userId) {
+      if (comment.author.clerkId !== auth.userId) {
         throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized' })
       }
 
-      const updatedComment = await ctx.prisma.comment.update({
+      const updatedComment = await prisma.comment.update({
         where: { id: input.id },
         data: { content: input.content },
         include: commentInclude,
       })
 
-      const formattedComment = formatCommentResponse(updatedComment, ctx.auth.userId)
+      const formattedComment = formatCommentResponse(updatedComment, auth.userId)
 
       ee.emit('commentUpdated', formattedComment)
       return formattedComment
@@ -275,7 +279,8 @@ export const commentRouter = router({
 
   // Delete a comment
   delete: protectedProcedure.input(z.string()).mutation(async ({ ctx, input: id }) => {
-    const comment = await ctx.prisma.comment.findUnique({
+    const { prisma, auth } = ctx
+    const comment = await prisma.comment.findUnique({
       where: { id },
       include: { author: true },
     })
@@ -284,18 +289,19 @@ export const commentRouter = router({
       throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' })
     }
 
-    if (comment.author.clerkId !== ctx.auth.userId) {
+    if (comment.author.clerkId !== auth.userId) {
       throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized' })
     }
 
-    await ctx.prisma.comment.delete({ where: { id } })
+    await prisma.comment.delete({ where: { id } })
     ee.emit('commentDeleted', id)
     return { success: true }
   }),
 
   // Like a comment
   likeComment: protectedProcedure.input(z.object({ id: z.string() })).mutation(async ({ ctx, input }) => {
-    const comment = await ctx.prisma.comment.findUnique({
+    const { prisma, auth } = ctx
+    const comment = await prisma.comment.findUnique({
       where: { id: input.id },
       select: { postId: true },
     })
@@ -307,9 +313,9 @@ export const commentRouter = router({
       })
     }
 
-    const like = await ctx.prisma.like.create({
+    const like = await prisma.like.create({
       data: {
-        userId: ctx.auth.userId ?? '',
+        userId: auth.userId!,
         commentId: input.id,
         postId: comment.postId,
       },
@@ -327,10 +333,11 @@ export const commentRouter = router({
 
   // Unlike a comment
   unlikeComment: protectedProcedure.input(z.object({ id: z.string() })).mutation(async ({ ctx, input }) => {
-    const like = await ctx.prisma.like.findFirst({
+    const { prisma, auth } = ctx
+    const like = await prisma.like.findFirst({
       where: {
         commentId: input.id,
-        userId: ctx.auth.userId ?? '',
+        userId: auth.userId!,
       },
     })
 
@@ -341,7 +348,7 @@ export const commentRouter = router({
       })
     }
 
-    await ctx.prisma.like.delete({
+    await prisma.like.delete({
       where: { id: like.id },
     })
 
@@ -350,6 +357,7 @@ export const commentRouter = router({
 
   // Get comment metrics for analytics
   getCommentMetrics: ownerProcedure.query(async ({ ctx }) => {
+    const { prisma } = ctx
     const now = new Date()
     const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
     const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()))
@@ -357,13 +365,13 @@ export const commentRouter = router({
 
     const [totalComments, totalSpam, totalReported, commentsToday, commentsThisWeek, commentsThisMonth, topAuthors] =
       await Promise.all([
-        ctx.prisma.comment.count(),
-        ctx.prisma.comment.count({ where: { isSpam: true } }),
-        ctx.prisma.comment.count({ where: { isReported: true } }),
-        ctx.prisma.comment.count({ where: { createdAt: { gte: startOfToday } } }),
-        ctx.prisma.comment.count({ where: { createdAt: { gte: startOfWeek } } }),
-        ctx.prisma.comment.count({ where: { createdAt: { gte: startOfMonth } } }),
-        ctx.prisma.comment
+        prisma.comment.count(),
+        prisma.comment.count({ where: { isSpam: true } }),
+        prisma.comment.count({ where: { isReported: true } }),
+        prisma.comment.count({ where: { createdAt: { gte: startOfToday } } }),
+        prisma.comment.count({ where: { createdAt: { gte: startOfWeek } } }),
+        prisma.comment.count({ where: { createdAt: { gte: startOfMonth } } }),
+        prisma.comment
           .groupBy({
             by: ['authorId'],
             _count: true,
@@ -376,7 +384,7 @@ export const commentRouter = router({
             where: { isSpam: false },
           })
           .then(async groups => {
-            const authors = await ctx.prisma.user.findMany({
+            const authors = await prisma.user.findMany({
               where: { id: { in: groups.map(g => g.authorId) } },
               select: { id: true, name: true, email: true },
             })
@@ -388,7 +396,7 @@ export const commentRouter = router({
       ])
 
     // Calculate average response time (time between consecutive comments)
-    const comments = await ctx.prisma.comment.findMany({
+    const comments = await prisma.comment.findMany({
       orderBy: { createdAt: 'asc' },
       select: { createdAt: true },
       where: { isSpam: false },
@@ -468,7 +476,8 @@ export const commentRouter = router({
       })
     )
     .mutation(async ({ ctx, input }): Promise<Comment> => {
-      const comment = await ctx.prisma.comment.findUnique({
+      const { prisma } = ctx
+      const comment = await prisma.comment.findUnique({
         where: { id: input.id },
         include: commentInclude,
       })
@@ -477,7 +486,7 @@ export const commentRouter = router({
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' })
       }
 
-      const updatedComment = await ctx.prisma.comment.update({
+      const updatedComment = await prisma.comment.update({
         where: { id: input.id },
         data: {
           isSpam: input.isSpam ?? comment.isSpam,
@@ -502,7 +511,8 @@ export const commentRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const result = await ctx.prisma.comment.updateMany({
+      const { prisma } = ctx
+      const result = await prisma.comment.updateMany({
         where: { id: { in: input.ids } },
         data: {
           isSpam: input.isSpam,
@@ -511,7 +521,7 @@ export const commentRouter = router({
       })
 
       // Get updated comments
-      const updatedComments = await ctx.prisma.comment.findMany({
+      const updatedComments = await prisma.comment.findMany({
         where: { id: { in: input.ids } },
         include: commentInclude,
       })
@@ -526,7 +536,8 @@ export const commentRouter = router({
 
   // Delete a comment (admin only)
   adminDeleteComment: ownerProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
-    const comment = await ctx.prisma.comment.findUnique({
+    const { prisma } = ctx
+    const comment = await prisma.comment.findUnique({
       where: { id: input },
     })
 
@@ -534,7 +545,7 @@ export const commentRouter = router({
       throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' })
     }
 
-    await ctx.prisma.comment.delete({
+    await prisma.comment.delete({
       where: { id: input },
     })
 
@@ -553,7 +564,8 @@ export const commentRouter = router({
       })
     )
     .mutation(async ({ ctx, input }): Promise<Comment> => {
-      const comment = await ctx.prisma.comment.findUnique({
+      const { prisma } = ctx
+      const comment = await prisma.comment.findUnique({
         where: { id: input.id },
         include: commentInclude,
       })
@@ -562,7 +574,7 @@ export const commentRouter = router({
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' })
       }
 
-      const updatedComment = await ctx.prisma.comment.update({
+      const updatedComment = await prisma.comment.update({
         where: { id: input.id },
         data: {
           content: input.content,
@@ -585,7 +597,8 @@ export const commentRouter = router({
       })
     )
     .mutation(async ({ ctx, input }): Promise<Comment> => {
-      const parentComment = await ctx.prisma.comment.findUnique({
+      const { prisma, auth } = ctx
+      const parentComment = await prisma.comment.findUnique({
         where: { id: input.parentId },
       })
 
@@ -593,17 +606,17 @@ export const commentRouter = router({
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Parent comment not found' })
       }
 
-      const newComment = await ctx.prisma.comment.create({
+      const newComment = await prisma.comment.create({
         data: {
           content: input.content,
           postId: input.postId,
-          authorId: ctx.auth.userId ?? '',
+          authorId: auth.userId!,
           parentId: input.parentId,
         },
         include: commentInclude,
       })
 
-      const formattedComment = formatCommentResponse(newComment, ctx.auth.userId ?? undefined)
+      const formattedComment = formatCommentResponse(newComment, auth.userId!)
       ee.emit('newComment', formattedComment)
       return formattedComment
     }),

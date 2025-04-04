@@ -31,27 +31,27 @@ export const createCommentRouter = (commentUseCase: CommentUseCase) => {
       .mutation(async ({ input, ctx }: RouterContext & { input: CreateCommentInput }) => {
         return commentUseCase.createComment({
           ...input,
-          authorId: ctx.userId!,
+          authorId: ctx.auth.userId!,
         })
       }),
 
     update: protectedProcedure
       .input(UpdateCommentSchema)
       .mutation(async ({ input, ctx }: RouterContext & { input: UpdateCommentInput }) => {
-        return commentUseCase.updateComment(input.id, { content: input.content }, ctx.userId!)
+        return commentUseCase.updateComment(input.id, { content: input.content }, ctx.auth.userId!)
       }),
 
     delete: protectedProcedure
       .input(DeleteCommentSchema)
       .mutation(async ({ input, ctx }: RouterContext & { input: DeleteCommentInput }) => {
-        await commentUseCase.deleteComment(input.id, ctx.userId!)
+        await commentUseCase.deleteComment(input.id, ctx.auth.userId!)
         return { success: true }
       }),
 
     report: protectedProcedure
       .input(ReportCommentSchema)
       .mutation(async ({ input, ctx }: RouterContext & { input: ReportCommentInput }) => {
-        return commentUseCase.reportComment(input.id, ctx.userId!)
+        return commentUseCase.reportComment(input.id, ctx.auth.userId!)
       }),
   })
 }
