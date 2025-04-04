@@ -59,7 +59,7 @@ const isOwner = middleware(async ({ ctx, next }) => {
 
   const user = await ctx.prisma.user.findUnique({
     where: {
-      id: ctx.auth.userId,
+      clerkId: ctx.auth.userId!,
       role: 'OWNER',
     },
   })
